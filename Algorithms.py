@@ -1,3 +1,7 @@
+import hashlib
+import hashlib
+import hmac
+
 
 def to_binary(string):
     temp = []
@@ -26,3 +30,13 @@ def xor(a, b):
         else:
             temp += "1"
     return temp
+
+
+def SHA1(string):
+    sha = hashlib.sha1(string.encode('utf-8'))
+    return sha
+
+
+def HMAC(string):
+    h = hmac.new(string, digestmod='MD5')
+    return h
