@@ -11,7 +11,7 @@ message = ""
 while message != "exit":
     connect, addr = server.accept()
     cipher = connect.recv(1024).decode()
-    print("address：", addr)
+    print("address: ", addr)
     print(cipher)
     message = to_string(cipher)
     print(message)
