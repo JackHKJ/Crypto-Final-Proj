@@ -38,5 +38,6 @@ def SHA1(string):
 
 
 def HMAC(string):
-    h = hmac.new(string, digestmod='MD5')
+    key = b'114514'
+    h = hmac.new(key, string, digestmod='MD5')
     return h
