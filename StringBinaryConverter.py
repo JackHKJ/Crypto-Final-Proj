@@ -13,3 +13,16 @@ def to_string(binary):
     for i in range(int(len(binary) / 8)):
         string += chr(int(binary[i*8:i*8+8], 2))
     return string
+
+def Encoder32(message):
+    if(len(message)%4 != 0):
+        for i in range(len(message)%4):
+            message += "#"
+    return to_binary(message)
+
+def Decode32(message):
+    ret = to_string(message)
+    while(ret[-1] == "#"):
+        ret = ret[:-1]
+    return ret
+
