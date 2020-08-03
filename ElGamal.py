@@ -35,13 +35,10 @@ def Jacobian(x,n):
     if x % 4 == 3 and n % 4 == 3:
         return -1 * Jacobian( n, x)
     else:
-        return Jacobian(n, x )         
-        
+        return Jacobian(n, x )        
         #if ((n**2 -1)/8 % 2) == 0:
             #return Jacobian(x/2,n)
-        #return -1 * Jacobian(x/2,n)
-    
-    
+        #return -1 * Jacobian(x/2,n)    
     if (((x-1) * (n-1) / 4 ) % 2) == 0:
         return Jacobian(n % x, x)
     return -1 * Jacobian (n % x, x)
@@ -109,33 +106,6 @@ def KeyGen():
     #[public,private]
     return [[p,g,h],[p,g,x]]
     
-    
-def encodeSTI(msg):
-    byte = bytearray(msg, 'utf-16')
-    ret = []
-    j = -4
-    index = 0
-    for i in range(len(byte)):
-        if i % 4 == 0:
-            j += 4
-            index = 0
-            ret.append(0)
-        ret[j//4] += byte[i]*(2**(8*(i%4)))
-    return ret
-
-def decodeITS(msg):
-    ret = []
-    for thisNumber in msg:
-        for i in range(4):
-            temp = thisNumber
-            for j in range(i+1, 4):
-                temp = temp % (2**(8*j))
-            letter = temp // (2**(8*i))
-            ret.append(letter)
-            thisNumber = thisNumber - (letter*(2**(8*i)))
-    retDec = bytearray(bit for bit in ret).decode('utf-16')
-    return retDec    
-
     
 def Encrypt32bit(p,g,h,msg):
     message = Encoder32(msg)
