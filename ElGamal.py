@@ -136,32 +136,37 @@ def decodeITS(msg):
     retDec = bytearray(bit for bit in ret).decode('utf-16')
     return retDec    
 
-
-   
-def Encrypt(p,g,h,message):
-    encoded = encodeSTI(message)
+    
+def Encrypt32bit(p,g,h,msg):
+    message = Encoder32(msg)
+    print(msg+":")
+    print(message)
     encrypt_pair = []
-    for i in encoded:
+    for i in range(0,len(message),8):
+        thisNum = int(message[i:i+8])
         y = random.randint(0, p )
         c = moduloExponent( g, y, p)
-        d = (i*moduloExponent( h, y, p)) % p
+        d = (thisNum*moduloExponent( h, y, p)) % p
         encrypt_pair.append( [c, d] )
     encryptedStr = ""
     for thisPair in encrypt_pair:
         encryptedStr += str(thisPair[0]) + ' ' + str(thisPair[1]) + ' '
-    return encryptedStr    
+    return encryptedStr   
     
-def Decrypt(p,g,x,msg):
-    ret = []
+
+def Decrypt32bit(p,g,x,msg):
+    ret = ""
     msgList = msg.split()
     for i in range(0, len(msgList), 2):
         c = int(msgList[i])
         d = int(msgList[i+1])
         s = moduloExponent( c, x, p)
         text = (d*moduloExponent( s,p-2, p)) % p
-        ret.append( text )
-    retDec = decodeITS(ret)
-    retDec = "".join([bit for bit in retDec if bit != '\x00'])
+        text = str(text)
+        while(len(text)< 8):
+            text = "0"+text
+        ret += text        
+    retDec = Decode32(ret)
     return retDec
     
     
@@ -173,7 +178,7 @@ if __name__ == "__main__":
     ## p,g,x
     privateKey = keySet[1]
         
-    cipherText = (Encrypt(publicKey[0],publicKey[1],publicKey[2],"AAAA"));
+    cipherText = (Encrypt32bit(publicKey[0],publicKey[1],publicKey[2],"AAAA"));
     print(cipherText)
-    plainText = (Decrypt(privateKey[0],privateKey[1],privateKey[2],cipherText));
+    plainText = (Decrypt32bit(privateKey[0],privateKey[1],privateKey[2],cipherText));
     print(plainText)    
