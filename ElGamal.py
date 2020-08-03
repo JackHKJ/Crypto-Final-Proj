@@ -98,6 +98,7 @@ def find_primitive_root( p ):
 
 
 ## generate 32 bit key pair
+## on return: [0]: public key [1]: private key
 def KeyGen():    
     p = generatePrime()
     g = moduloExponent(find_primitive_root(p), 2 , p)
@@ -106,11 +107,22 @@ def KeyGen():
     #[public,private]
     return [[p,g,h],[p,g,x]]
     
+
+## param: publicKeySet: the public key set in sequence p,g,h
+def Encrypt32bit(publicKeySet,msg):
+    ## seperate the keyset
+    p = publicKeySet[0]
+    g = publicKeySet[1]
+    h = publicKeySet[2]
     
-def Encrypt32bit(p,g,h,msg):
     message = Encoder32(msg)
-    print(msg+":")
-    print(message)
+    
+    ## for debugging
+    if __name__ == "__main__":        
+        print(msg+":")
+        print(message)
+        
+     
     encrypt_pair = []
     for i in range(0,len(message),8):
         thisNum = int(message[i:i+8])
@@ -124,7 +136,13 @@ def Encrypt32bit(p,g,h,msg):
     return encryptedStr   
     
 
-def Decrypt32bit(p,g,x,msg):
+## param: privateKeySet: the private key set in sequence p,g,x
+def Decrypt32bit(privateKeySet ,msg):
+    
+    p = privateKeySet[0]
+    g = privateKeySet[1]
+    x = privateKeySet[2]
+    
     ret = ""
     msgList = msg.split()
     for i in range(0, len(msgList), 2):
@@ -136,7 +154,7 @@ def Decrypt32bit(p,g,x,msg):
         while(len(text)< 8):
             text = "0"+text
         ret += text        
-    retDec = Decode32(ret)
+    retDec = Decoder32(ret)
     return retDec
     
     
@@ -148,7 +166,9 @@ if __name__ == "__main__":
     ## p,g,x
     privateKey = keySet[1]
         
-    cipherText = (Encrypt32bit(publicKey[0],publicKey[1],publicKey[2],"AAAA"));
+    
+    plainText = "AAAA"   
+    cipherText = (Encrypt32bit(publicKey,plainText));
     print(cipherText)
-    plainText = (Decrypt32bit(privateKey[0],privateKey[1],privateKey[2],cipherText));
-    print(plainText)    
+    recoveredText = (Decrypt32bit(privateKey,cipherText));
+    print(recoveredText)    

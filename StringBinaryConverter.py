@@ -20,7 +20,7 @@ def Encoder32(message):
             message += "#"
     return to_binary(message)
 
-def Decode32(message):
+def Decoder32(message):
     ret = to_string(message)
     while(ret[-1] == "#"):
         ret = ret[:-1]
