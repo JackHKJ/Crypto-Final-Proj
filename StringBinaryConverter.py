@@ -26,3 +26,15 @@ def Decoder32(message):
         ret = ret[:-1]
     return ret
 
+
+def Encoder64(message):
+    if(len(message)%8 != 0):
+        for i in range(len(message)%8):
+            message += "#"
+    return to_binary(message)
+
+def Decoder64(message):
+    ret = to_string(message)
+    while(ret[-1] == "#"):
+        ret = ret[:-1]
+    return ret
