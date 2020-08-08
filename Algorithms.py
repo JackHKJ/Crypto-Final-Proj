@@ -255,7 +255,4 @@ des_data = "0"*(64-len(des_data)) + des_data
 cbc_iv = bin(random.randint(1, 2 ** 64))[2:]
 cbc_iv = "0"*(64-len(cbc_iv)) + cbc_iv
 cipher = CBC_DES_encrypt(des_data, des_key, cbc_iv)
-print("key:\t", des_key)
-print("text:\t", des_data)
-print("cipher:\t", cipher)
-print("plain:\t", CBC_DES_decrypt(cipher, des_key, cbc_iv))
+
