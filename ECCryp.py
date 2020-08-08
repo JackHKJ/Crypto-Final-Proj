@@ -173,20 +173,27 @@ def koblitz_de (secr,ab):
   a = scalar_mult( ab, secr[0])
   b = (secr[1][0]-a[0], secr[1][1]-a[1])
   c = itohx(b[0])
+  # print(ab)
   c = hxtos(c)
   return c
 
 
-bob_private_key, bob_public_key = make_keypair()
-print("private key:", hex(bob_private_key))
-print("public key: (0x{:x}, 0x{:x})".format(*bob_public_key))
-print("\n\n")
-a = "this is project"
 
-b = stohx(a)
-print("Encrypting: ",a)
-print("            ",b)
-b = koblitz_en(a,bob_public_key)
-print("Cypher: ",b)
-c = koblitz_de(b,bob_private_key)
-print("Decypted: ",c)
+
+# apr, apu = make_keypair()
+# bpr, bpu = make_keypair()
+# s1 = scalar_mult(apr, bpu)
+# s2 = scalar_mult(bpr, apu)
+# a = "this is project"
+# print(apr, apu)
+# b = stohx(a)
+# spri = s1[0]
+# spub = scalar_mult(s1[0], curve.g)
+# print("Encrypting: ",a)
+# print("            ",b)
+# b = koblitz_en(a,spub)
+# print("Cypher: ",b)
+# c = koblitz_de(b,spri)
+#
+# print("A Decrypted: ",c)
+
