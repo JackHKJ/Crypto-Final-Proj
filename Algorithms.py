@@ -248,11 +248,16 @@ def CBC_DES_decrypt(cipher, key, iv):
         return plain
 
 
+# generate key
 des_key = bin(random.randint(1, 2 ** 64))[2:]
 des_key = "0"*(64-len(des_key)) + des_key
+# data format
 des_data = bin(random.randint(1, 2 ** 64))[2:]
 des_data = "0"*(64-len(des_data)) + des_data
+# generate initial vector
 cbc_iv = bin(random.randint(1, 2 ** 64))[2:]
 cbc_iv = "0"*(64-len(cbc_iv)) + cbc_iv
+# function call
 cipher = CBC_DES_encrypt(des_data, des_key, cbc_iv)
+plain = CBC_DES_encrypt(cipher, des_key, cbc_iv)
 
