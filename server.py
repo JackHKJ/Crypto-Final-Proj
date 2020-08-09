@@ -2,6 +2,8 @@ import socket
 from KEYgen import ECCsrv
 from Algorithms import *
 from ECCryp import *
+from ElGamal import *
+from MACer import *
 """
 SSL handshake protocol
 1. client: Choice of 'ECC', 'DES', 'ELG'
@@ -13,7 +15,10 @@ SSL handshake protocol
 7. client: Esec(message)
 """
 
-en_method = ""
+       
+
+
+en_method = "ELG"
 #KEYS GOES HERE, TESTING ONLY!!!
 pri, pub = 17266110910292182863031101798374952031947451314643790344773650325784057863506, (63418887483913902302210242333028958573736406591311866468970740733910330138582, 100732508251634749738002515251900185798485578709518688083838565500932099246055)
 
@@ -66,6 +71,7 @@ connect.send('secret'.encode())
 print("SSL handshake complete")
 
 if en_method == "ELG":
+    pass
     #ElGamal private and public key generation
 else:
     pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
@@ -74,10 +80,13 @@ while r_message != "exit":
     r_cipher = connect.recv(1024).decode()
     # decrypt here
     if en_method == "ECC":
+        pass
         #encrypt with ECC
     elif en_method == "DES":
+        pass
         #encrypt with DES
     elif en_method == "ELG":
+        pass
         #encrypt with ELG
     r_message = to_string(r_cipher)
     print("<<<", r_message)

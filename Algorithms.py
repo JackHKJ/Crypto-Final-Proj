@@ -253,15 +253,15 @@ def CBC_DES_decrypt(cipher, keys):
 
 
 def stohx (a):
-  return "".join("{:02x}".format(ord(c)) for c in a)
+    return "".join("{:02x}".format(ord(c)) for c in a)
 
 
 def hxtos (a):
-  return bytearray.fromhex(a).decode()
+    return bytearray.fromhex(a).decode()
 
 
 def hxtoi (a):
-  return int(a,16)
+    return int(a,16)
 
 
 def keygen():
