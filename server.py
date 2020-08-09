@@ -13,8 +13,6 @@ SSL handshake protocol
 7. client: Esec(message)
 """
 
-
-
 en_method = ""
 #KEYS GOES HERE, TESTING ONLY!!!
 pri, pub = 17266110910292182863031101798374952031947451314643790344773650325784057863506, (63418887483913902302210242333028958573736406591311866468970740733910330138582, 100732508251634749738002515251900185798485578709518688083838565500932099246055)
@@ -70,6 +68,12 @@ print("SSL handshake complete")
 while r_message != "exit":
     r_cipher = connect.recv(1024).decode()
     # decrypt here
+    if en_method == "ECC":
+        #encrypt with ECC
+    elif en_method == "DES":
+        #encrypt with DES
+    elif en_method == "ELG":
+        #encrypt with ELG
     r_message = to_string(r_cipher)
     print("<<<", r_message)
     command = r_message.split()
