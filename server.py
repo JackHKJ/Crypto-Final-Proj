@@ -65,6 +65,11 @@ if r_message != tmpnce:
 connect.send('secret'.encode())
 print("SSL handshake complete")
 
+if en_method == "ELG":
+    #ElGamal private and public key generation
+else:
+    pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
+
 while r_message != "exit":
     r_cipher = connect.recv(1024).decode()
     # decrypt here
