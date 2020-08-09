@@ -42,4 +42,3 @@ def Decoder64(message):
         ret = ret[:-1]
     return ret
 
-
