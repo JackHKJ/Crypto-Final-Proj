@@ -160,15 +160,19 @@ def Decrypt32bit(privateKeySet ,msg):
     
     
 if __name__ == "__main__":
-    keySet = KeyGen()
-    ## p,g,h
-    publicKey = keySet[0]
-    ## p,g,x
-    privateKey = keySet[1]
+    
+    print(KeyGen())
+    print(KeyGen())
+    
+    #keySet = KeyGen()
+    ### p,g,h
+    #publicKey = keySet[0]
+    ### p,g,x
+    #privateKey = keySet[1]
         
     
-    plainText = "AAAA"   
-    cipherText = (Encrypt32bit(publicKey,plainText));
-    print(cipherText)
-    recoveredText = (Decrypt32bit(privateKey,cipherText));
-    print(recoveredText)    
+    #plainText = "AAAA"   
+    #cipherText = (Encrypt32bit(publicKey,plainText));
+    #print(cipherText)
+    #recoveredText = (Decrypt32bit(privateKey,cipherText));
+    #print(recoveredText)    

@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import math
 import random
-
+from StringBinaryConverter import *
 
 def to_binary(string):
     temp = []
@@ -214,7 +214,8 @@ def DES_decrypt(cipher, key):
     return plain
 
 
-def CBC_DES_encrypt(plain, keys):
+def CBC_DES_encrypt(plain, keys):    
+    plain = Encoder64(plain)
     key = keys[0]
     iv = keys[1]
     blocks = math.ceil(len(plain) / 64)
@@ -238,7 +239,8 @@ def CBC_DES_decrypt(cipher, keys):
     iv = keys[1]
     blocks = math.ceil(len(cipher) / 64)
     if blocks == 1:
-        return xor(DES_decrypt(cipher, key), iv)
+        plain =  xor(DES_decrypt(cipher, key), iv)
+        return Decoder64(plain)
     else:
         ciphers = []
         for i in range(blocks):
@@ -249,18 +251,19 @@ def CBC_DES_decrypt(cipher, keys):
             plains.append(xor(DES_decrypt(ciphers[i], key), ciphers[i-1]))
         for i in range(blocks):
             plain += plains[i]
+        plain = Decoder64(plain)
         return plain
 
 
 
 def stohx (a):
-  return "".join("{:02x}".format(ord(c)) for c in a)
+    return "".join("{:02x}".format(ord(c)) for c in a)
 
 def hxtos (a):
-  return bytearray.fromhex(a).decode()
+    return bytearray.fromhex(a).decode()
 
 def hxtoi (a):
-  return int(a,16)
+    return int(a,16)
 
 def itohx(a):
   return hex(a)[2:]
@@ -279,5 +282,4 @@ def keygen():
     des_key = "0"*(64-len(des_key)) + des_key
     cbc_iv = bin(random.randint(1, 2 ** 64))[2:]
     cbc_iv = "0"*(64-len(cbc_iv)) + cbc_iv
-    return des_key, cbc_iv
-
+    return [des_key, cbc_iv]
