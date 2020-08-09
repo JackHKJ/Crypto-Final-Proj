@@ -4,6 +4,7 @@ import math
 import random
 from StringBinaryConverter import *
 
+
 def to_binary(string):
     temp = []
     result = ""
