@@ -4,6 +4,7 @@ from Algorithms import *
 from ECCryp import *
 from ElGamal import *
 from MACer import *
+from KEYgen import *
 
 def decryptor(method, ciphertext, macKey, decryptKey):
     #decrypt
@@ -26,6 +27,7 @@ def decryptor(method, ciphertext, macKey, decryptKey):
     
 def encryptor(method, plaintext, macKey, encryptkey):
     textwithMAC = addMAC(plaintext, macKey)
+    ciphertext = ""
     if method == "ELG":
         ciphertext = Encrypt32bit(encryptkey, textwithMAC)
     elif method == "DES":
@@ -48,13 +50,22 @@ if __name__ == "__main__":
     plainText = decryptor("ELG",cipherText,macKey,pri)
     print(plainText)
     
-    ## DES
-    pub = pri = keygen()
-    macKey = "thisIsAMacKey"
-    plain = "ABCD1234"
-    cipherText = encryptor("DES",plain,macKey,pub)
-    print(cipherText)
-    plainText = decryptor("DES",cipherText,macKey,pri)
-    print(plainText)    
+    ### DES
+    #pub = pri = keygen()
+    #macKey = "thisIsAMacKey"
+    #plain = "ABCD1234"
+    #cipherText = encryptor("DES",plain,macKey,pub)
+    #print(cipherText)
+    #plainText = decryptor("DES",cipherText,macKey,pri)
+    #print(plainText)    
     
+    
+    ### ECC
+    #pri, pub, ss = ECCsrv()
+    #macKey = "thisIsAMacKey"
+    #plain = "ABCD1234"
+    #cipherText = encryptor("ECC",plain,macKey,pub)
+    #print(cipherText)
+    #plainText = decryptor("ECC",cipherText,macKey,pri)
+    #print(plainText)    
     
