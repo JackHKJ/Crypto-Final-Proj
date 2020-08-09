@@ -47,15 +47,12 @@ MAC_KEY = "MACKEY"
 
 while s_message != "exit":
     s_message = input(">>> ")
+    print("Sending: "+s_message)
     s_message = encryptor(en_method, s_message, MAC_KEY, CLIENT_ENCKEY)    
-    print(s_message)
     s_cipher = to_binary(s_message)
     client.send(s_cipher.encode())
     
-    
     r_cipher = client.recv(10240).decode()
-    print(r_cipher)
-    #r_message = to_string(r_cipher)
     r_message = decryptor(en_method,r_cipher, MAC_KEY, CLIENT_DECKEY)
     print(r_message)
 client.close()

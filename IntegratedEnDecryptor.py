@@ -18,7 +18,7 @@ def decryptor(method, ciphertext, macKey, decryptKey):
     else:
         print("Error, invalid en/decryption method" )
         return "Error, invalid en/decryption method" 
-    print(textWithMAC)    
+    #print(textWithMAC)    
     #verify mac
     #"$REJECT" will be returned on error
     plain = verifyMAC(textWithMAC, macKey)

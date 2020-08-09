@@ -87,7 +87,6 @@ MAC_KEY = "MACKEY"
 while r_message != "exit":
     r_cipher = connect.recv(10240).decode()
     r_message = to_string(r_cipher)
-    print(r_message)
     
     ## decrypt here
     #if en_method == "ECC":
