@@ -50,14 +50,14 @@ if __name__ == "__main__":
     plainText = decryptor("ELG",cipherText,macKey,pri)
     print(plainText)
     
-    ### DES
-    #pub = pri = keygen()
-    #macKey = "thisIsAMacKey"
-    #plain = "ABCD1234"
-    #cipherText = encryptor("DES",plain,macKey,pub)
-    #print(cipherText)
-    #plainText = decryptor("DES",cipherText,macKey,pri)
-    #print(plainText)    
+    ## DES
+    pub = pri = keygen()
+    macKey = "thisIsAMacKey"
+    plain = "ABCD1234"
+    cipherText = encryptor("DES",plain,macKey,pub)
+    print(cipherText)
+    plainText = decryptor("DES",cipherText,macKey,pri)
+    print(plainText)    
     
     
     ### ECC

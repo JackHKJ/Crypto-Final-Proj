@@ -33,6 +33,8 @@ server.listen(5)
 r_message = ""
 connect, addr = server.accept()
 print("address: ", addr)
+
+
 #r_cipher = connect.recv(1024).decode()
 #r_message = to_string(r_cipher)
 #en_method = r_message
