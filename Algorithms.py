@@ -214,7 +214,9 @@ def DES_decrypt(cipher, key):
     return plain
 
 
-def CBC_DES_encrypt(plain, key, iv):
+def CBC_DES_encrypt(plain, keys):
+    key = keys[0]
+    iv = keys[1]
     blocks = math.ceil(len(plain) / 64)
     if blocks == 1:
         return DES_encrypt(xor(plain, iv), key)
@@ -231,7 +233,9 @@ def CBC_DES_encrypt(plain, key, iv):
         return cipher
 
 
-def CBC_DES_decrypt(cipher, key, iv):
+def CBC_DES_decrypt(cipher, keys):
+    key = keys[0]
+    iv = keys[1]
     blocks = math.ceil(len(cipher) / 64)
     if blocks == 1:
         return xor(DES_decrypt(cipher, key), iv)
@@ -246,32 +250,24 @@ def CBC_DES_decrypt(cipher, key, iv):
         for i in range(blocks):
             plain += plains[i]
         return plain
+
+
 def stohx (a):
   return "".join("{:02x}".format(ord(c)) for c in a)
+
 
 def hxtos (a):
   return bytearray.fromhex(a).decode()
 
+
 def hxtoi (a):
   return int(a,16)
 
-def itohx(a):
-  return hex(a)[2:]
 
-def nonce_new(enc):
-    a = str(hxtoi(stohx(enc)))[:8]
-    return a
-
-def nonce_inc(a):
-    a = str(stohx(a))
-    a = stohx(a)
-    a = str(hxtoi(a)+12000000)[:16]
-    return a
-des_key = bin(random.randint(1, 2 ** 64))[2:]
-des_key = "0"*(64-len(des_key)) + des_key
-des_data = bin(random.randint(1, 2 ** 64))[2:]
-des_data = "0"*(64-len(des_data)) + des_data
-cbc_iv = bin(random.randint(1, 2 ** 64))[2:]
-cbc_iv = "0"*(64-len(cbc_iv)) + cbc_iv
-cipher = CBC_DES_encrypt(des_data, des_key, cbc_iv)
+def keygen():
+    des_key = bin(random.randint(1, 2 ** 64))[2:]
+    des_key = "0"*(64-len(des_key)) + des_key
+    cbc_iv = bin(random.randint(1, 2 ** 64))[2:]
+    cbc_iv = "0"*(64-len(cbc_iv)) + cbc_iv
+    return des_key, cbc_iv
 

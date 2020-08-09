@@ -84,7 +84,7 @@ while r_message != "exit":
     command = r_message.split()
     if command[0] == "deposit":
         if len(command) != 2:
-            s_message = "Invalid command!"
+            s_message = "Invalid command!\nSee commands using \"help\""
             # encrypt here
             s_cipher = s_message
             connect.send(s_cipher.encode())
@@ -96,7 +96,7 @@ while r_message != "exit":
             connect.send(s_cipher.encode())
     elif command[0] == "withdraw":
         if len(command) != 2:
-            s_message = "Invalid command!"
+            s_message = "Invalid command!\nSee commands using \"help\""
             # encrypt here
             s_cipher = s_message
             connect.send(s_cipher.encode())
