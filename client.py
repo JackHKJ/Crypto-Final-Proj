@@ -55,4 +55,6 @@ while s_message != "exit":
     r_cipher = client.recv(10240).decode()
     r_message = decryptor(en_method,r_cipher, MAC_KEY, CLIENT_DECKEY)
     print(r_message)
+    if(r_message == "Goodbye!"):
+        break
 client.close()

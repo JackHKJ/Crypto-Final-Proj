@@ -13,13 +13,15 @@ def to_binary(string):
 
 def to_string(binary):
     string = ""
-    for i in range(int(len(binary) / 8)):
+    for i in range(int(len(binary) // 8)):
         string += chr(int(binary[i*8:i*8+8], 2))
     return string
 
 def Encoder32(message):
+    message = str(message)
     if(len(message)%4 != 0):
-        for i in range(len(message)%4):
+        itr = len(message) %4
+        for i in range(itr):
             message += padding_list[random.randint(0,len(padding_list))]
     return to_binary(message)
 
