@@ -78,7 +78,7 @@ elif en_method == "DES":
 elif en_method == "ECC":
     CLIENT_DECKEY, SERVER_ENCKEY = make_keypair()
     SERVER_DECKEY, CLIENT_ENCKEY = make_keypair()
-    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1]) + "," + str(CLIENT_DECKEY)
+    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1]) + "," + str(CLIENT_DECKEY) +","
 MAC_KEY = random.randint(2**62, 2**63)
 
 

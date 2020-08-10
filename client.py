@@ -40,8 +40,9 @@ client.send(s_cipher.encode())
 # sec3 = koblitz_de(sec3, pri)
 # print(sec1,sec2,sec3)
 
-r_cipher = client.recv(1024).decode()
-r_message = to_string(CBC_DES_encrypt(r_cipher, (to_binary(str(srd))[:64],to_binary(str(srd))[64:128])))
+r_cipher = client.recv(90240).decode()
+r_message = to_string(CBC_DES_decrypt(r_cipher, (to_binary(str(srd))[:64],to_binary(str(srd))[64:128])))
+print(r_message)
 keys = r_message.split(",")
 if en_method == "ELG":
     CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]
