@@ -42,6 +42,7 @@ client.send(s_cipher.encode())
 
 r_cipher = client.recv(1024).decode()
 r_message = to_string(CBC_DES_encrypt(r_cipher, (to_binary(str(pri))[:64],to_binary(str(pri))[64:128])))
+print(r_message)
 keys = r_message.split(",")
 if en_method == "ELG":
     CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]
