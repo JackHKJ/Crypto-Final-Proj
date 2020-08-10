@@ -42,7 +42,7 @@ client.send(s_cipher.encode())
 
 r_cipher = client.recv(200240).decode()
 r_message = to_string(CBC_DES_decrypt(r_cipher, (to_binary(str(srd))[:64],to_binary(str(srd))[64:128])))
-print(r_message)
+# print(r_message)
 keys = r_message.split(",")
 if en_method == "ELG":
     CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]
@@ -53,13 +53,13 @@ elif en_method == "DES":
 elif en_method == "ECC":
     CLIENT_ENCKEY = (int(keys[0]), int(keys[1]))
     CLIENT_DECKEY = int(keys[2])
-print(CLIENT_DECKEY,CLIENT_ENCKEY)
+# print(CLIENT_DECKEY,CLIENT_ENCKEY)
 MAC_KEY = keys[-1]
 print("SSL handshake complete")
 
-print(CLIENT_DECKEY)
-print(CLIENT_ENCKEY)
-print(MAC_KEY)
+# print(CLIENT_DECKEY)
+# print(CLIENT_ENCKEY)
+# print(MAC_KEY)
 
 while s_message != "exit":
     s_message = input(">>> ")

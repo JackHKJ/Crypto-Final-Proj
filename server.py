@@ -59,7 +59,7 @@ r_cipher = connect.recv(10240).decode()
 
 r_message = to_string(r_cipher)
 if r_message != tmpnce:
-    print(r_cipher, checkp)
+    # print(r_cipher, checkp)
     print("Handshake failed! @dec Closing connection {}".format(addr))
     connect.close()
     exit()

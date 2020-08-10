@@ -20,7 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc3f02b6-526f-4f47-8d71-04b9e45cc271" name="Default Changelist" comment="commit">
-      <change beforePath="$PROJECT_DIR$/MACer.py" beforeDir="false" afterPath="$PROJECT_DIR$/MACer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntegratedEnDecryptor.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntegratedEnDecryptor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -167,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1597048522362</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="commit">
+      <created>1597048970844</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1597048970844</updated>
+    </task>
+    <task id="LOCAL-00017" summary="commit">
+      <created>1597049086511</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1597049086511</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,18 +206,18 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-1045" y="171" width="2230" height="1117" key="DiffContextDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597045538727" />
-    <state x="3" y="88" key="MergeDialog" timestamp="1597041864927">
+    <state x="3" y="88" key="MergeDialog" timestamp="1597050172219">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="3" y="88" key="MergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597041864927" />
+    <state x="3" y="88" key="MergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597050172219" />
     <state x="909" y="427" key="MultipleFileMergeDialog" timestamp="1597041864932">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="909" y="427" key="MultipleFileMergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597041864932" />
-    <state x="851" y="432" key="Vcs.Push.Dialog.v2" timestamp="1597048528169">
+    <state x="851" y="432" key="Vcs.Push.Dialog.v2" timestamp="1597049088271">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="851" y="432" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1597048528169" />
+    <state x="851" y="432" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1597049088271" />
     <state x="499" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596484327283">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

@@ -22,7 +22,7 @@ def decryptor(method, ciphertext, macKey, decryptKey):
     #print(textWithMAC)    
     #verify mac
     #"$REJECT" will be returned on error
-    print(textWithMAC)
+    # print(textWithMAC)
     plain = verifyMAC(textWithMAC, macKey)
     return plain
     
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     ## ECC
     pri, pub = make_keypair()
     macKey = "thisIsAMacKey"
-    plain = "ABCD1234"
+    plain = "123"
     cipherText = encryptor("ECC",plain,macKey,pub)
     print(cipherText)
     plainText = decryptor("ECC",cipherText,macKey,pri)
