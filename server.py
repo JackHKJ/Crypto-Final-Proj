@@ -36,17 +36,16 @@ print("address: ", addr)
 
 
 r_cipher = connect.recv(1024).decode()
-r_message = to_string(r_cipher)
+r_message = koblitz_de_str(r_cipher, pri)
 en_method = r_message
 nce = nonce_new(en_method)
-s_cipher = to_binary(koblitz_en_str(nce, pub))
+s_cipher = koblitz_en_str(nce, pub)
 connect.send(s_cipher.encode())
 r_cipher = connect.recv(1024).decode()
-r_message = to_string(koblitz_de_str(r_cipher, pri))
+r_message = koblitz_de_str(r_cipher, pri)
 tmpnce = nce
 for i in range(4):
     tmpnce = nonce_inc(tmpnce)
-
 if tmpnce != r_message:
     print("Handshake failed! @nce Closing connection {}".format(addr))
     connect.close()
@@ -70,11 +69,8 @@ if r_message != tmpnce:
 if en_method == "ELG":
     SERVER_ENCKEY, CLIENT_DECKEY = KeyGen()
     CLIENT_ENCKEY, SERVER_DECKEY = KeyGen()
-    s_message = str(CLIENT_ENCKEY[0][0]) + "," + str(CLIENT_ENCKEY[0][1]) + "," + str(CLIENT_ENCKEY[0][2]) + "," + \
-                str(CLIENT_ENCKEY[1][0]) + "," + str(CLIENT_ENCKEY[1][1]) + "," + str(CLIENT_ENCKEY[1][2]) + "," + \
-                str(CLIENT_DECKEY[0][0]) + "," + str(CLIENT_DECKEY[0][1]) + "," + str(CLIENT_DECKEY[0][2]) + "," + \
-                str(CLIENT_DECKEY[1][0]) + "," + str(CLIENT_DECKEY[1][1]) + "," + str(CLIENT_DECKEY[1][2]) + "," + \
-                str(CLIENT_DECKEY[1]) + ","
+    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1]) + "," + str(CLIENT_ENCKEY[2]) + "," + \
+                str(CLIENT_DECKEY[0]) + "," + str(CLIENT_DECKEY[1]) + "," + str(CLIENT_DECKEY[2]) + ","
 elif en_method == "DES":
     SERVER_ENCKEY = CLIENT_DECKEY = keygen()
     CLIENT_ENCKEY = SERVER_DECKEY = keygen()
@@ -84,12 +80,11 @@ elif en_method == "ECC":
     CLIENT_DECKEY, SERVER_ENCKEY = make_keypair()
     SERVER_DECKEY, CLIENT_ENCKEY = make_keypair()
     s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1][0]) + "," + str(CLIENT_ENCKEY[1][1]) + "," + \
-                str(CLIENT_DECKEY[0]) + "," + str(CLIENT_DECKEY[1][0]) + "," + str(CLIENT_DECKEY[1][1]) + "," + \
-                str(CLIENT_DECKEY[1]) + ","
-
+                str(CLIENT_DECKEY[0]) + "," + str(CLIENT_DECKEY[1][0]) + "," + str(CLIENT_DECKEY[1][1]) + ","
 MAC_KEY = random.randint(2**62, 2**63)
+
 s_message += str(MAC_KEY)
-s_cipher = koblitz_en_str(s_message, pub)
+s_cipher = koblitz_en_str(to_binary(s_message), pub)
 connect.send(s_cipher.encode())
 
 # sec1 = str(CLIENT_DECKEY)

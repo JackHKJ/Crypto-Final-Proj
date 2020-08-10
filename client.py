@@ -40,11 +40,11 @@ client.send(s_cipher.encode())
 # sec3 = koblitz_de(sec3, pri)
 # print(sec1,sec2,sec3)
 r_cipher = client.recv(1024).decode()
-r_message = koblitz_de_str(r_cipher, pri)
+r_message = to_string(koblitz_de_str(r_cipher, pri))
 keys = r_message.split(",")
 if en_method == "ELG":
-    CLIENT_ENCKEY = [[keys[0], keys[1], keys[2]], [keys[3], keys[4], keys[5]]]
-    CLIENT_DECKEY = [[keys[6], keys[7], keys[8]], [keys[9], keys[10], keys[11]]]
+    CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]
+    CLIENT_DECKEY = [keys[3], keys[4], keys[5]]
 elif en_method == "DES":
     CLIENT_ENCKEY = [keys[0], keys[1]]
     CLIENT_DECKEY = [keys[2], keys[3]]
