@@ -39,8 +39,9 @@ client.send(s_cipher.encode())
 # sec3  = client.recv(10240).decode()
 # sec3 = koblitz_de(sec3, pri)
 # print(sec1,sec2,sec3)
+
 r_cipher = client.recv(1024).decode()
-r_message = to_string(koblitz_de_str(r_cipher, pri))
+r_message = to_string(CBC_DES_encrypt(r_cipher, (to_binary(str(pri))[:64],to_binary(str(pri))[64:128])))
 keys = r_message.split(",")
 if en_method == "ELG":
     CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]

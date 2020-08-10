@@ -53,6 +53,7 @@ if __name__ == "__main__":
     
     # DES
     pub = pri = keygen()
+    print("haha", pri)
     macKey = "thisIsAMacKey"
     plain = "ABCD1234"
     cipherText = encryptor("DES",plain,macKey,pub)
