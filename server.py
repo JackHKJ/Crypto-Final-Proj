@@ -79,9 +79,9 @@ elif en_method == "DES":
 elif en_method == "ECC":
     CLIENT_DECKEY, SERVER_ENCKEY = make_keypair()
     SERVER_DECKEY, CLIENT_ENCKEY = make_keypair()
-    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1][0]) + "," + str(CLIENT_ENCKEY[1][1]) + "," + \
-                str(CLIENT_DECKEY[0]) + "," + str(CLIENT_DECKEY[1][0]) + "," + str(CLIENT_DECKEY[1][1]) + ","
+    s_message = str(CLIENT_ENCKEY[0][0]) + "," + str(CLIENT_ENCKEY[0][1]) + "," + str(CLIENT_DECKEY)
 MAC_KEY = random.randint(2**62, 2**63)
+
 
 s_message += str(MAC_KEY)
 s_cipher = koblitz_en_str(to_binary(s_message), pub)

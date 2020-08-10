@@ -49,8 +49,8 @@ elif en_method == "DES":
     CLIENT_ENCKEY = [keys[0], keys[1]]
     CLIENT_DECKEY = [keys[2], keys[3]]
 elif en_method == "ECC":
-    CLIENT_ENCKEY = [keys[0], [keys[1], keys[2]]]
-    CLIENT_DECKEY = [keys[3], [keys[4], keys[5]]]
+    CLIENT_ENCKEY = [keys[0], keys[1]]
+    CLIENT_DECKEY = keys[2]
 MAC_KEY = keys[-1]
 print("SSL handshake complete")
 
