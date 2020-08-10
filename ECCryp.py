@@ -178,6 +178,17 @@ def koblitz_de (secr,ab):
   return c
 
 
+def koblitz_en_str(m,ab):
+  return str(koblitz_en (m,ab))
+
+
+def koblitz_de_str(ciphertext, keyset):
+  left, right = ciphertext[2:-2].split("), (")
+  l1, l2 = left.split(", ")
+  r1, r2 = right.split(", ")
+  cipher = ((int(l1),int(l2)),(int(r1),float(r2)))
+  return koblitz_de(cipher, keyset)
+
 
 
 #apr, apu = make_keypair()

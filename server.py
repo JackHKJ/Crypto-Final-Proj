@@ -16,6 +16,8 @@ SSL handshake protocol
 7. client: Esec(message)
 """
 
+       
+
 
 en_method = "ELG"
 # KEYS GOES HERE, TESTING ONLY!!!
@@ -73,33 +75,33 @@ if r_message != tmpnce:
 connect.send('secret'.encode())
 print("SSL handshake complete")
 
-#  NEED IMPLEMENTATION #########################################
-#  need exchange before the actual communication
+## NEED IMPLEMENTATION #########################################
+## need exchange before the actual communication
 SERVER_ENCKEY = [2632130759, 1036786760, 1316040819]
 SERVER_DECKEY = [3521483783, 104390050, 1087869608]
 MAC_KEY = "MACKEY"
-#  END ###########################################################
+## END ###########################################################
 
-# if en_method == "ELG":
-    # pass
-    # ElGamal private and public key generation
-# else:
-    # pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
+#if en_method == "ELG":
+    #pass
+    ##ElGamal private and public key generation
+#else:
+    #pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
 
 while r_message != "exit":
     r_cipher = connect.recv(10240).decode()
     r_message = to_string(r_cipher)
     
-    # decrypt here
-    # if en_method == "ECC":
-        # pass
-        # encrypt with ECC
-    # elif en_method == "DES":
-        # pass
-        # encrypt with DES
-    # elif en_method == "ELG":
-        # pass
-        # encrypt with ELG
+    ## decrypt here
+    #if en_method == "ECC":
+        #pass
+        ##encrypt with ECC
+    #elif en_method == "DES":
+        #pass
+        ##encrypt with DES
+    #elif en_method == "ELG":
+        #pass
+        ##encrypt with ELG
     r_message = decryptor(en_method,r_message,MAC_KEY,SERVER_DECKEY)    
     print("<<<", r_message)
     

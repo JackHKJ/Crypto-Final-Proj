@@ -4,7 +4,10 @@ from Algorithms import *
 from ECCryp import *
 from IntegratedEnDecryptor import *
 
-en_method = "ELG"
+#en_method = "ELG"
+en_method = input("Enter the encryption method (ELG/ECC/DES) you want: ")
+if en_method != "ELG" and en_method != "ECC" and en_method != "DES":
+    en_method = "ELG"
 #KEYS GOES HERE, TESTING ONLY!!!
 pri, pub = 17266110910292182863031101798374952031947451314643790344773650325784057863506, (63418887483913902302210242333028958573736406591311866468970740733910330138582, 100732508251634749738002515251900185798485578709518688083838565500932099246055)
 s_message = ""
@@ -21,19 +24,22 @@ r_cipher = nonce_inc(r_cipher)
 r_cipher = nonce_inc(r_cipher)
 s_cipher = to_binary(r_cipher)
 client.send(s_cipher.encode())
-r1 = client.recv(1024).decode()
-client.send(s_cipher.encode())
-r2 = client.recv(1024).decode()
-client.send(s_cipher.encode())
-r3 = client.recv(1024).decode()
-client.send(s_cipher.encode())
-r4 = client.recv(1024).decode()
-cyph = ((int(r1),int(r2)),(int(r3),float(r4)))
-dec = koblitz_de(cyph,pri)
+##
+cypher = client.recv(10240).decode()
+dec = koblitz_de_str(cypher,pri)
 r_cipher = nonce_inc(dec)
 s_cipher = to_binary(r_cipher)
 client.send(s_cipher.encode())
-r_cipher = client.recv(1024).decode()#serect, need decrypt
+
+#sec1  = client.recv(10240).decode()
+#sec1 = koblitz_de(sec1, pri)
+#sec2  = client.recv(10240).decode()
+#sec2 = koblitz_de(sec2, pri)
+#sec3  = client.recv(10240).decode()
+#sec3 = koblitz_de(sec3, pri)
+
+#print(sec1,sec2,sec3)
+
 print("SSL handshake complete")
 
 
