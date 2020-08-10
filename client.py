@@ -45,8 +45,8 @@ r_message = to_string(CBC_DES_decrypt(r_cipher, (to_binary(str(srd))[:64],to_bin
 # print(r_message)
 keys = r_message.split(",")
 if en_method == "ELG":
-    CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]
-    CLIENT_DECKEY = [keys[3], keys[4], keys[5]]
+    CLIENT_ENCKEY = [int(keys[0]), int(keys[1]), int(keys[2])]
+    CLIENT_DECKEY = [int(keys[3]), int(keys[4]), int(keys[5])]
 elif en_method == "DES":
     CLIENT_ENCKEY = [keys[0], keys[1]]
     CLIENT_DECKEY = [keys[2], keys[3]]
