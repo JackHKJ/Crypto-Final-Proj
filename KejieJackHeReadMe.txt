@@ -22,3 +22,7 @@ HMAC-SHA1 implementation:
 	https://gist.github.com/heskyji/5167567b64cb92a910a3
 
 	The logic of the Authentication is to add MAC (addMAC) to the end of the plain text and then encrypt the whole string, then check MAC (verifyMAC) when received. "$REJECT" will be returned as an ERROR message.
+
+The StringBinaryConverter:
+
+	This is a converter class implemented for add padding to satisfy the bit-length requirement, which uses the random padding that select characters in the set(padding_list) and append them to the end of the message. When decoding, strip off the characters from the back when possible
