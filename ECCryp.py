@@ -211,4 +211,22 @@ def koblitz_de_str(ciphertext, keyset):
 # c = koblitz_de(b,spri)
 # #
 # print("A Decrypted: ",c)
+if __name__ == "__main__":
+    print('Curve:', curve.name)
 
+    # Alice generates her own keypair.
+    alice_private_key, alice_public_key = make_keypair()
+    print("Alice's private key:", alice_private_key)
+    print("Alice's public key: (0x{:x}, 0x{:x})",alice_public_key)
+
+    # Bob generates his own key pair.
+    bob_private_key, bob_public_key = make_keypair()
+    print("Bob's private key:", bob_private_key)
+    print("Bob's public key: (0x{:x}, 0x{:x})",bob_public_key)
+
+    # Alice and Bob exchange their public keys and calculate the shared secret.
+    s1 = scalar_mult(alice_private_key, bob_public_key)
+    s2 = scalar_mult(bob_private_key, alice_public_key)
+    assert s1 == s2
+
+    print('Shared secret: (0x{:x}, 0x{:x})',s1)

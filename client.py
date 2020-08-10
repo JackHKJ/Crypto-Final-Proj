@@ -8,9 +8,9 @@ from IntegratedEnDecryptor import *
 en_method = input("Enter the encryption method (ELG/ECC/DES) you want: ")
 if en_method != "ELG" and en_method != "ECC" and en_method != "DES":
     en_method = "ELG"
-pri, pub = 17266110910292182863031101798374952031947451314643790344773650325784057863506, \
-           (63418887483913902302210242333028958573736406591311866468970740733910330138582,
-            100732508251634749738002515251900185798485578709518688083838565500932099246055)
+pri, pub =  101375943321386149405255896770276173339493063286505907504133666719784558836801, \
+           (46745410170763116639558389851576751376301611910273696710697654476131960007936, 99310026869934149626916933043616231052578698302535499877622520030423328957386)
+srd = 28163497231646330096955240836392597663982077794570507527227719278559069711492
 s_message = ""
 host = socket.gethostname()
 port = 8808
@@ -41,7 +41,7 @@ client.send(s_cipher.encode())
 # print(sec1,sec2,sec3)
 
 r_cipher = client.recv(1024).decode()
-r_message = to_string(CBC_DES_encrypt(r_cipher, (to_binary(str(pri))[:64],to_binary(str(pri))[64:128])))
+r_message = to_string(CBC_DES_encrypt(r_cipher, (to_binary(str(srd))[:64],to_binary(str(srd))[64:128])))
 keys = r_message.split(",")
 if en_method == "ELG":
     CLIENT_ENCKEY = [keys[0], keys[1], keys[2]]
