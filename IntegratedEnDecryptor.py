@@ -14,7 +14,7 @@ def decryptor(method, ciphertext, macKey, decryptKey):
     elif method == "DES":
         textWithMAC = CBC_DES_decrypt(ciphertext, decryptKey)
     elif method == "ECC":
-        textWithMAC = koblitz_de(ciphertext, decryptKey)
+        textWithMAC = koblitz_de_str(ciphertext, decryptKey)
     else:
         print("Error, invalid en/decryption method" )
         return "Error, invalid en/decryption method" 
@@ -33,7 +33,7 @@ def encryptor(method, plaintext, macKey, encryptkey):
     elif method == "DES":
         ciphertext = CBC_DES_encrypt(textwithMAC, encryptkey)
     elif method == "ECC":
-        ciphertext = koblitz_en(textwithMAC, encryptkey)
+        ciphertext = koblitz_en_str(textwithMAC, encryptkey)
     else:
         print("Error, invalid en/decryption method")
         return "Error, invalid en/decryption method" 

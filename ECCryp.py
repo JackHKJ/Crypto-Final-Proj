@@ -193,6 +193,8 @@ def koblitz_de_str(ciphertext, keyset):
 
 # apr, apu = make_keypair()
 # bpr, bpu = make_keypair()
+# print(apr, apu)
+# print(bpr, bpu)
 # s1 = scalar_mult(apr, bpu)
 # s2 = scalar_mult(bpr, apu)
 # a = "ABCD1234wpbaKse4kCx8guvlqADTF-gkSLU="
