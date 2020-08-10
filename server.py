@@ -39,89 +39,77 @@ r_cipher = connect.recv(1024).decode()
 r_message = to_string(r_cipher)
 en_method = r_message
 nce = nonce_new(en_method)
-connect.send(nce.encode())
+s_cipher = to_binary(koblitz_en_str(nce, pub))
+connect.send(s_cipher.encode())
 r_cipher = connect.recv(1024).decode()
-r_message = to_string(r_cipher)
-tmpnce = nonce_inc(nce)
-tmpnce = nonce_inc(tmpnce)
-tmpnce = nonce_inc(tmpnce)
-tmpnce = nonce_inc(tmpnce)
+r_message = to_string(koblitz_de_str(r_cipher, pri))
+tmpnce = nce
+for i in range(4):
+    tmpnce = nonce_inc(tmpnce)
 
-if(tmpnce != r_message):
+if tmpnce != r_message:
     print("Handshake failed! @nce Closing connection {}".format(addr))
     connect.close()
     exit()
 nce = nonce_inc(nce)
 tmpnce = nonce_inc(nce)
 tclnt = koblitz_en_str(nce, pub)
-checkp = koblitz_en(tmpnce,pub)
+checkp = koblitz_en(tmpnce, pub)
 ##
 connect.send(tclnt.encode())
 r_cipher = connect.recv(10240).decode()
 
-
 r_message = to_string(r_cipher)
 if r_message != tmpnce:
-    print(r_cipher,checkp)
+    print(r_cipher, checkp)
     print("Handshake failed! @dec Closing connection {}".format(addr))
     connect.close()
     exit()
-    
-## generating key pairs for encryption
+
+# generating key pairs for encryption
 if en_method == "ELG":
     SERVER_ENCKEY, CLIENT_DECKEY = KeyGen()
     CLIENT_ENCKEY, SERVER_DECKEY = KeyGen()
-if en_method == "DES":
+    s_message = str(CLIENT_ENCKEY[0][0]) + "," + str(CLIENT_ENCKEY[0][1]) + "," + str(CLIENT_ENCKEY[0][2]) + "," + \
+                str(CLIENT_ENCKEY[1][0]) + "," + str(CLIENT_ENCKEY[1][1]) + "," + str(CLIENT_ENCKEY[1][2]) + "," + \
+                str(CLIENT_DECKEY[0][0]) + "," + str(CLIENT_DECKEY[0][1]) + "," + str(CLIENT_DECKEY[0][2]) + "," + \
+                str(CLIENT_DECKEY[1][0]) + "," + str(CLIENT_DECKEY[1][1]) + "," + str(CLIENT_DECKEY[1][2]) + "," + \
+                str(CLIENT_DECKEY[1]) + ","
+elif en_method == "DES":
     SERVER_ENCKEY = CLIENT_DECKEY = keygen()
     CLIENT_ENCKEY = SERVER_DECKEY = keygen()
-## todo ECC
+    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1]) + "," + \
+                str(CLIENT_DECKEY[0]) + "," + str(CLIENT_DECKEY[1]) + ","
+elif en_method == "ECC":
+    CLIENT_DECKEY, SERVER_ENCKEY = make_keypair()
+    SERVER_DECKEY, CLIENT_ENCKEY = make_keypair()
+    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1][0]) + "," + str(CLIENT_ENCKEY[1][1]) + "," + \
+                str(CLIENT_DECKEY[0]) + "," + str(CLIENT_DECKEY[1][0]) + "," + str(CLIENT_DECKEY[1][1]) + "," + \
+                str(CLIENT_DECKEY[1]) + ","
 
 MAC_KEY = random.randint(2**62, 2**63)
+s_message += str(MAC_KEY)
+s_cipher = koblitz_en_str(s_message, pub)
+connect.send(s_cipher.encode())
 
-#sec1 = str(CLIENT_DECKEY)
-#sec1 = koblitz_en(sec1, pub)
-#print(sec1)
-#connect.send(sec1.encode())
-
-#sec2 = str(CLIENT_ENCKEY)
-#sec2 = koblitz_en(sec2, pub)
-#connect.send(sec1.encode())
-
-#sec3 = str(MAC_KEY)
-#sec3 = koblitz_en(sec3, pub)
-#connect.send(sec1.encode())
-
+# sec1 = str(CLIENT_DECKEY)
+# sec1 = koblitz_en(sec1, pub)
+# print(sec1)
+# connect.send(sec1.encode())
+# sec2 = str(CLIENT_ENCKEY)
+# sec2 = koblitz_en(sec2, pub)
+# connect.send(sec1.encode())
+# sec3 = str(MAC_KEY)
+# sec3 = koblitz_en(sec3, pub)
+# connect.send(sec1.encode())
 
 print("SSL handshake complete")
 
-## NEED IMPLEMENTATION #########################################
-## need exchange before the actual communication
-SERVER_ENCKEY = (111424227728653973693487741115936850362795211037851575928498626423329976428198, 11142569238708697687739565437964320833265344920279491677967914583507687303629)
-SERVER_DECKEY = 91838603497381221099410955303817289674795061747944840649439772219237063007634
-MAC_KEY = "MACKEY"
-## END ###########################################################
-
-#if en_method == "ELG":
-    #pass
-    ##ElGamal private and public key generation
-#else:
-    #pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
 
 while r_message != "exit":
     r_cipher = connect.recv(10240).decode()
     r_message = to_string(r_cipher)
-    
-    ## decrypt here
-    #if en_method == "ECC":
-        #pass
-        ##encrypt with ECC
-    #elif en_method == "DES":
-        #pass
-        ##encrypt with DES
-    #elif en_method == "ELG":
-        #pass
-        ##encrypt with ELG
-    r_message = decryptor(en_method,r_message,MAC_KEY,SERVER_DECKEY)    
+    r_message = decryptor(en_method, r_message, MAC_KEY, SERVER_DECKEY)
     print("<<<", r_message)
     
     command = r_message.split()

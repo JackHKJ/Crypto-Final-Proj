@@ -96,28 +96,27 @@ def find_primitive_root( p ):
                 return g
         
 
-
-## generate 32 bit key pair
-## on return: [0]: public key [1]: private key
+# generate 32 bit key pair
+# on return: [0]: public key [1]: private key
 def KeyGen():    
     p = generatePrime()
-    g = moduloExponent(find_primitive_root(p), 2 , p)
+    g = moduloExponent(find_primitive_root(p), 2, p)
     x = random.randint(1, (p-1) // 2)
-    h = moduloExponent(g,x,p)
-    #[public,private]
-    return [[p,g,h],[p,g,x]]
+    h = moduloExponent(g, x, p)
+    # [public,private]
+    return [[p, g, h], [p, g, x]]
     
 
-## param: publicKeySet: the public key set in sequence p,g,h
-def Encrypt64bit(publicKeySet,msg):
-    ## seperate the keyset
+# param: publicKeySet: the public key set in sequence p,g,h
+def Encrypt64bit(publicKeySet, msg):
+    # seperate the keyset
     p = publicKeySet[0]
     g = publicKeySet[1]
     h = publicKeySet[2]
     
     message = Encoder64(msg)
     
-    ## for debugging
+    # for debugging
     if __name__ == "__main__":        
         print(msg+":")
         print(message)

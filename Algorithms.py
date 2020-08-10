@@ -276,7 +276,7 @@ def nonce_new(enc):
     a = str(hxtoi(stohx(enc)))[:16]
     if 16 != len(a):
         for i in range(16):
-            if len(a)==16:
+            if len(a) == 16:
                 break
             a = a[-i] + a
     return a
@@ -287,7 +287,7 @@ def nonce_inc(a):
     a = str(int(a[4:]+a[1]+a[3]+a[0]+a[2])+5)
     if tmp != len(a):
         for i in range(tmp):
-            if len(a)==tmp:
+            if len(a) == tmp:
                 break
             a = a[-i] + a
     return a

@@ -22,17 +22,21 @@ curve = EllipticCurve(
     h=1,
 )
 
-def stohx (a):
-  return "".join("{:02x}".format(ord(c)) for c in a)
 
-def hxtos (a):
-  return bytearray.fromhex(a).decode()
+def stohx(a):
+    return "".join("{:02x}".format(ord(c)) for c in a)
 
-def hxtoi (a):
-  return int(a,16)
+
+def hxtos(a):
+    return bytearray.fromhex(a).decode()
+
+
+def hxtoi(a):
+    return int(a,16)
+
 
 def itohx(a):
-  return hex(a)[2:]
+    return hex(a)[2:]
 
 
 # Modular arithmetic ##########################################################
@@ -61,7 +65,6 @@ def inverse_mod(k, p):
     return x % p
 
 
-
 # Used to calculate Nb or Na times the point
 def is_on_curve(point):
     if point is None:
@@ -82,6 +85,7 @@ def point_neg(point):
     assert is_on_curve(result)
 
     return result
+
 
 # credit https://github.com/andreacorbellini/ecc/blob/master/scripts/ecdhe.py
 def point_add(point1, point2):
@@ -119,6 +123,7 @@ def point_add(point1, point2):
 
     return result
 
+
 # credit https://github.com/andreacorbellini/ecc/blob/master/scripts/ecdhe.py
 def scalar_mult(k, point):
     """Returns k * point computed using the double and point_add algorithm."""
@@ -150,45 +155,42 @@ def scalar_mult(k, point):
 
 
 def koblitz_en (m,ab):
-  b = stohx(m)
-  b = hxtoi(b)
-  bet = ab
-  tmpy = (b**3 + 7)**(1/2)
-  rnum =  random.randrange(1, curve.n)
-  secr1 = scalar_mult( int(rnum), curve.g)
-  tmp = scalar_mult( rnum, bet)
-  secr2 =(b+tmp[0],tmpy+ tmp[1])
-  return (secr1,secr2)
+    b = stohx(m)
+    b = hxtoi(b)
+    bet = ab
+    tmpy = (b**3 + 7)**(1/2)
+    rnum =  random.randrange(1, curve.n)
+    secr1 = scalar_mult( int(rnum), curve.g)
+    tmp = scalar_mult( rnum, bet)
+    secr2 =(b+tmp[0],tmpy+ tmp[1])
+    return secr1, secr2
+
 
 def make_keypair():
-    private_key = random.randrange(1, curve.n)#get a ranndom number to multiply with
+    private_key = random.randrange(1, curve.n)  # get a random number to multiply with
     public_key = scalar_mult(private_key, curve.g)
-
     return private_key, public_key
 
 
+def koblitz_de(secr, ab):
+    a = scalar_mult( ab, secr[0])
+    b = (secr[1][0]-a[0], secr[1][1]-a[1])
+    c = itohx(b[0])
+    # print(ab)
+    c = hxtos(c)
+    return c
 
 
-def koblitz_de (secr,ab):
-  a = scalar_mult( ab, secr[0])
-  b = (secr[1][0]-a[0], secr[1][1]-a[1])
-  c = itohx(b[0])
-  # print(ab)
-  c = hxtos(c)
-  return c
-
-
-def koblitz_en_str(m,ab):
-  return str(koblitz_en (m,ab))
+def koblitz_en_str(m, ab):
+    return str(koblitz_en(m, ab))
 
 
 def koblitz_de_str(ciphertext, keyset):
-  left, right = ciphertext[2:-2].split("), (")
-  l1, l2 = left.split(", ")
-  r1, r2 = right.split(", ")
-  cipher = ((int(l1),int(l2)),(int(r1),float(r2)))
-  return koblitz_de(cipher, keyset)
-
+    left, right = ciphertext[2:-2].split("), (")
+    l1, l2 = left.split(", ")
+    r1, r2 = right.split(", ")
+    cipher = ((int(l1), int(l2)), (int(r1), float(r2)))
+    return koblitz_de(cipher, keyset)
 
 
 # apr, apu = make_keypair()
