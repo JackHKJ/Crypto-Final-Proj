@@ -191,20 +191,20 @@ def koblitz_de_str(ciphertext, keyset):
 
 
 
-apr, apu = make_keypair()
-bpr, bpu = make_keypair()
-s1 = scalar_mult(apr, bpu)
-s2 = scalar_mult(bpr, apu)
-a = "ABCD1234wpbaKse4kCx8guvlqADTF-gkSLU="
-print(apr, apu)
-b = stohx(a)
-spri = s1[0]
-spub = scalar_mult(s1[0], curve.g)
-print("Encrypting: ",a)
-print("            ",b)
-b = koblitz_en(a,spub)
-print("Cypher: ",b)
-c = koblitz_de(b,spri)
-#
-print("A Decrypted: ",c)
+# apr, apu = make_keypair()
+# bpr, bpu = make_keypair()
+# s1 = scalar_mult(apr, bpu)
+# s2 = scalar_mult(bpr, apu)
+# a = "ABCD1234wpbaKse4kCx8guvlqADTF-gkSLU="
+# print(apr, apu)
+# b = stohx(a)
+# spri = s1[0]
+# spub = scalar_mult(s1[0], curve.g)
+# print("Encrypting: ",a)
+# print("            ",b)
+# b = koblitz_en(a,spub)
+# print("Cypher: ",b)
+# c = koblitz_de(b,spri)
+# #
+# print("A Decrypted: ",c)
 
