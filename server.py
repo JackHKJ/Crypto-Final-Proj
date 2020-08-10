@@ -16,6 +16,8 @@ SSL handshake protocol
 7. client: Esec(message)
 """
 
+       
+
 
 en_method = "ELG"
 # KEYS GOES HERE, TESTING ONLY!!!
@@ -47,30 +49,51 @@ tmpnce = nonce_inc(tmpnce)
 tmpnce = nonce_inc(tmpnce)
 tmpnce = nonce_inc(tmpnce)
 
-if tmpnce != r_message:
+if(tmpnce != r_message):
     print("Handshake failed! @nce Closing connection {}".format(addr))
     connect.close()
     exit()
 nce = nonce_inc(nce)
 tmpnce = nonce_inc(nce)
-tclnt = koblitz_en(nce, pub)
-checkp = koblitz_en(tmpnce, pub)
+tclnt = koblitz_en_str(nce, pub)
+checkp = koblitz_en(tmpnce,pub)
+##
+connect.send(tclnt.encode())
+r_cipher = connect.recv(10240).decode()
 
-connect.send(str(tclnt[0][0]).encode())
-r_cipher = connect.recv(1024).decode()
-connect.send(str(tclnt[0][1]).encode())
-r_cipher = connect.recv(1024).decode()
-connect.send(str(tclnt[1][0]).encode())
-r_cipher = connect.recv(1024).decode()
-connect.send(str(int(tclnt[1][1])).encode())
-r_cipher = connect.recv(1024).decode()
+
 r_message = to_string(r_cipher)
 if r_message != tmpnce:
     print(r_cipher,checkp)
     print("Handshake failed! @dec Closing connection {}".format(addr))
     connect.close()
     exit()
-connect.send('secret'.encode())
+    
+## generating key pairs for encryption
+if en_method == "ELG":
+    SERVER_ENCKEY, CLIENT_DECKEY = KeyGen()
+    CLIENT_ENCKEY, SERVER_DECKEY = KeyGen()
+if en_method == "DES":
+    SERVER_ENCKEY = CLIENT_DECKEY =  keygen()
+    CLIENT_ENCKEY =  SERVER_DECKEY = keygen()
+## todo ECC
+
+MAC_KEY = random.randint(2**62,2**63)
+
+#sec1 = str(CLIENT_DECKEY)
+#sec1 = koblitz_en(sec1, pub)
+#print(sec1)
+#connect.send(sec1.encode())
+
+#sec2 = str(CLIENT_ENCKEY)
+#sec2 = koblitz_en(sec2, pub)
+#connect.send(sec1.encode())
+
+#sec3 = str(MAC_KEY)
+#sec3 = koblitz_en(sec3, pub)
+#connect.send(sec1.encode())
+
+
 print("SSL handshake complete")
 
 ## NEED IMPLEMENTATION #########################################
@@ -107,12 +130,10 @@ while r_message != "exit":
     s_message = ""
     if command[0] == "deposit":
         if len(command) != 2:
-            s_message = "Invalid command!\nthe right format should be: deposit {amount}"
+            s_message = "Invalid command!\nSee commands using \"help\""
         elif command[1].isnumeric():
             balance += float(command[1])
             s_message = "Successfully deposited ${}".format(command[1])
-        else:
-            s_message = "Invalid command!\nthe amount should be a number"
     elif command[0] == "withdraw":
         if len(command) != 2:
             s_message = "Invalid command!\nthe right format should be: withdraw {amount}"

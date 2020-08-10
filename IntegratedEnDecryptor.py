@@ -15,6 +15,7 @@ def decryptor(method, ciphertext, macKey, decryptKey):
     elif method == "DES":
         textWithMAC = CBC_DES_decrypt(ciphertext, decryptKey)
     elif method == "ECC":
+        print('TEST ciphertext: ',ciphertext)
         textWithMAC == koblitz_de(ciphertext, decryptKey)
     else:
         print("Error, invalid en/decryption method" )
@@ -61,12 +62,12 @@ if __name__ == "__main__":
     print(plainText)    
     
     
-    ### ECC
-    #pri, pub, ss = ECCsrv()
-    #macKey = "thisIsAMacKey"
-    #plain = "ABCD1234"
-    #cipherText = encryptor("ECC",plain,macKey,pub)
-    #print(cipherText)
-    #plainText = decryptor("ECC",cipherText,macKey,pri)
-    #print(plainText)    
+    ## ECC
+    pri, pub = make_keypair()
+    macKey = "thisIsAMacKey"
+    plain = "ABCD1234"
+    cipherText = encryptor("ECC",plain,macKey,pub)
+    print(cipherText)
+    plainText = decryptor("ECC",cipherText,macKey,pri)
+    print(plainText)
     
