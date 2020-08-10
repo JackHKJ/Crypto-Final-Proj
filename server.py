@@ -47,14 +47,14 @@ tmpnce = nonce_inc(tmpnce)
 tmpnce = nonce_inc(tmpnce)
 tmpnce = nonce_inc(tmpnce)
 
-if(tmpnce != r_message):
+if tmpnce != r_message:
     print("Handshake failed! @nce Closing connection {}".format(addr))
     connect.close()
     exit()
 nce = nonce_inc(nce)
 tmpnce = nonce_inc(nce)
 tclnt = koblitz_en(nce, pub)
-checkp = koblitz_en(tmpnce,pub)
+checkp = koblitz_en(tmpnce, pub)
 
 connect.send(str(tclnt[0][0]).encode())
 r_cipher = connect.recv(1024).decode()
@@ -73,33 +73,33 @@ if r_message != tmpnce:
 connect.send('secret'.encode())
 print("SSL handshake complete")
 
-## NEED IMPLEMENTATION #########################################
-## need exchange before the actual communication
+#  NEED IMPLEMENTATION #########################################
+#  need exchange before the actual communication
 SERVER_ENCKEY = [2632130759, 1036786760, 1316040819]
 SERVER_DECKEY = [3521483783, 104390050, 1087869608]
 MAC_KEY = "MACKEY"
-## END ###########################################################
+#  END ###########################################################
 
-#if en_method == "ELG":
-    #pass
-    ##ElGamal private and public key generation
-#else:
-    #pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
+# if en_method == "ELG":
+    # pass
+    # ElGamal private and public key generation
+# else:
+    # pri, pub = make_keypair()# key gen for int pri, tuple (int , int) pub
 
 while r_message != "exit":
     r_cipher = connect.recv(10240).decode()
     r_message = to_string(r_cipher)
     
-    ## decrypt here
-    #if en_method == "ECC":
-        #pass
-        ##encrypt with ECC
-    #elif en_method == "DES":
-        #pass
-        ##encrypt with DES
-    #elif en_method == "ELG":
-        #pass
-        ##encrypt with ELG
+    # decrypt here
+    # if en_method == "ECC":
+        # pass
+        # encrypt with ECC
+    # elif en_method == "DES":
+        # pass
+        # encrypt with DES
+    # elif en_method == "ELG":
+        # pass
+        # encrypt with ELG
     r_message = decryptor(en_method,r_message,MAC_KEY,SERVER_DECKEY)    
     print("<<<", r_message)
     
@@ -107,19 +107,23 @@ while r_message != "exit":
     s_message = ""
     if command[0] == "deposit":
         if len(command) != 2:
-            s_message = "Invalid command!\nSee commands using \"help\""
+            s_message = "Invalid command!\nthe right format should be: deposit {amount}"
         elif command[1].isnumeric():
             balance += float(command[1])
             s_message = "Successfully deposited ${}".format(command[1])
+        else:
+            s_message = "Invalid command!\nthe amount should be a number"
     elif command[0] == "withdraw":
         if len(command) != 2:
-            s_message = "Invalid command!\nSee commands using \"help\""
+            s_message = "Invalid command!\nthe right format should be: withdraw {amount}"
         elif command[1].isnumeric():
             if float(command[1]) > balance:
                 s_message = "Not enough balance!".format(command[1])
             else:
                 balance -= float(command[1])
                 s_message = "Successfully withdrew ${}".format(command[1])
+        else:
+            s_message = "Invalid command!\nthe amount should be a number"
     elif command[0] == "balance":
         s_message = "Balance: ${}".format(balance)
     elif command[0] == "hello":
@@ -127,15 +131,15 @@ while r_message != "exit":
     elif command[0] == "exit":
         s_message = "Goodbye!"
     elif command[0] == "help":
-        s_message = "Deposit: deposit (amount)\n" \
-                    "Withdraw: withdraw (amount)\n" \
+        s_message = "Deposit: deposit {amount}\n" \
+                    "Withdraw: withdraw {amount}\n" \
                     "Check Balance: balance\n" \
                     "Exit: exit"
     else:
         s_message = "Invalid command!\nSee commands using \"help\""
     # encrypt here
     print("sending message: "+s_message)
-    s_cipher = encryptor(en_method,s_message,MAC_KEY,SERVER_ENCKEY)      
+    s_cipher = encryptor(en_method, s_message, MAC_KEY, SERVER_ENCKEY)
     connect.send(s_cipher.encode())
 connect.close()
 server.close()
