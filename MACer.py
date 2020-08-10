@@ -12,7 +12,7 @@ import base64
 ## https://gist.github.com/heskyji/5167567b64cb92a910a3
 ## Credit to author: heskyji
 def make_digest(message, key):
-    
+    key = str(key)
     key = bytes(key, 'UTF-8')
     message = bytes(message, 'UTF-8')    
     digester = hmac.new(key, message, hashlib.sha1)
