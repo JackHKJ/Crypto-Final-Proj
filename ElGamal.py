@@ -1,19 +1,19 @@
 import math
 import random
 from StringBinaryConverter import *
-##USAGE:
-##  to_binary(string)
-##  to_string(binary)
-##  Encoder32(string)
-##  Decode32(binary)
+# USAGE:
+#  to_binary(string)
+#  to_string(binary)
+#  Encoder32(string)
+#  Decode32(binary)
 
 
-## from the Jacobian method on CrypoSec_L7.1.pdf page 23
-##/x\
-##|-|
-##\n/
+# from the Jacobian method on CrypoSec_L7.1.pdf page 23
+# /x\
+# |-|
+# \n/
 def Jacobian(x,n):
-    if (x == 1):
+    if x == 1:
         return 1
     if x == 0:
         if n == 1:
@@ -28,7 +28,7 @@ def Jacobian(x,n):
             return 1
         if n % 8 in [3,5]:
             return -1  
-    if (x >= n):
+    if x >= n:
         return Jacobian(x%n, n)
     if x % 2 == 0:
         return Jacobian(2, n)*Jacobian(x//2, n)

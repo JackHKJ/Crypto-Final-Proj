@@ -6,6 +6,7 @@ from ElGamal import *
 from MACer import *
 from KEYgen import *
 
+
 def decryptor(method, ciphertext, macKey, decryptKey):
     #decrypt
     textWithMAC = ""
@@ -39,9 +40,9 @@ def encryptor(method, plaintext, macKey, encryptkey):
         return "Error, invalid en/decryption method" 
     return ciphertext
 
+
 if __name__ == "__main__":
-    
-    ## ELG
+    # ELG
     pub, pri = KeyGen()
     macKey = "thisIsAMacKey"
     plain = "ABCD1234"
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     plainText = decryptor("ELG",cipherText,macKey,pri)
     print(plainText)
     
-    ## DES
+    # DES
     pub = pri = keygen()
     macKey = "thisIsAMacKey"
     plain = "ABCD1234"
@@ -69,5 +70,3 @@ if __name__ == "__main__":
     #plainText = decryptor("ECC",cipherText,macKey,pri)
     #print(plainText)    
     
-    
-   

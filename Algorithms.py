@@ -215,7 +215,7 @@ def DES_decrypt(cipher, key):
     return plain
 
 
-def CBC_DES_encrypt(plain, keys):    
+def CBC_DES_encrypt(plain, keys):
     plain = Encoder64(plain)
     key = keys[0]
     iv = keys[1]

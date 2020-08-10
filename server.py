@@ -16,8 +16,6 @@ SSL handshake protocol
 7. client: Esec(message)
 """
 
-       
-
 
 en_method = "ELG"
 # KEYS GOES HERE, TESTING ONLY!!!
