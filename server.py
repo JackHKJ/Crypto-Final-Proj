@@ -53,24 +53,45 @@ if(tmpnce != r_message):
     exit()
 nce = nonce_inc(nce)
 tmpnce = nonce_inc(nce)
-tclnt = koblitz_en(nce, pub)
+tclnt = koblitz_en_str(nce, pub)
 checkp = koblitz_en(tmpnce,pub)
+##
+connect.send(tclnt.encode())
+r_cipher = connect.recv(10240).decode()
 
-connect.send(str(tclnt[0][0]).encode())
-r_cipher = connect.recv(1024).decode()
-connect.send(str(tclnt[0][1]).encode())
-r_cipher = connect.recv(1024).decode()
-connect.send(str(tclnt[1][0]).encode())
-r_cipher = connect.recv(1024).decode()
-connect.send(str(int(tclnt[1][1])).encode())
-r_cipher = connect.recv(1024).decode()
+
 r_message = to_string(r_cipher)
 if r_message != tmpnce:
     print(r_cipher,checkp)
     print("Handshake failed! @dec Closing connection {}".format(addr))
     connect.close()
     exit()
-connect.send('secret'.encode())
+    
+## generating key pairs for encryption
+if en_method == "ELG":
+    SERVER_ENCKEY, CLIENT_DECKEY = KeyGen()
+    CLIENT_ENCKEY, SERVER_DECKEY = KeyGen()
+if en_method == "DES":
+    SERVER_ENCKEY = CLIENT_DECKEY =  keygen()
+    CLIENT_ENCKEY =  SERVER_DECKEY = keygen()
+## todo ECC
+
+MAC_KEY = random.randint(2**62,2**63)
+
+#sec1 = str(CLIENT_DECKEY)
+#sec1 = koblitz_en(sec1, pub)
+#print(sec1)
+#connect.send(sec1.encode())
+
+#sec2 = str(CLIENT_ENCKEY)
+#sec2 = koblitz_en(sec2, pub)
+#connect.send(sec1.encode())
+
+#sec3 = str(MAC_KEY)
+#sec3 = koblitz_en(sec3, pub)
+#connect.send(sec1.encode())
+
+
 print("SSL handshake complete")
 
 ## NEED IMPLEMENTATION #########################################
