@@ -37,7 +37,7 @@ print("address: ", addr)
 r_cipher = connect.recv(1024).decode()
 r_message = koblitz_de_str(r_cipher, pri)
 en_method = r_message
-nce = nonce_new(en_method)
+nce = nonce_new()
 s_cipher = koblitz_en_str(nce, pub)
 connect.send(s_cipher.encode())
 r_cipher = connect.recv(1024).decode()

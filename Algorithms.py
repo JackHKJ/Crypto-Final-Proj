@@ -272,7 +272,7 @@ def itohx(a):
   return hex(a)[2:]
 
 
-def nonce_new(enc):
+def nonce_new():
     a = str(bin(random.randint(1, 2 ** 64))[2:])[:16]
     if 16 != len(a):
         for i in range(16):
