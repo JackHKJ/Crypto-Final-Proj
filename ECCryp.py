@@ -159,7 +159,7 @@ def koblitz_en (m,ab):
     b = hxtoi(b)
     bet = ab
     tmpy = (b**3 + 7)**(1/2)
-    rnum =  random.randrange(1, curve.n)
+    rnum = random.randrange(1, curve.n)
     secr1 = scalar_mult( int(rnum), curve.g)
     tmp = scalar_mult( rnum, bet)
     secr2 =(b+tmp[0],tmpy+ tmp[1])
