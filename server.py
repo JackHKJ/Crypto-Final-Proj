@@ -16,8 +16,6 @@ SSL handshake protocol
 7. client: Esec(message)
 """
 
-       
-
 
 en_method = "ELG"
 # KEYS GOES HERE, TESTING ONLY!!!
@@ -74,11 +72,11 @@ if en_method == "ELG":
     SERVER_ENCKEY, CLIENT_DECKEY = KeyGen()
     CLIENT_ENCKEY, SERVER_DECKEY = KeyGen()
 if en_method == "DES":
-    SERVER_ENCKEY = CLIENT_DECKEY =  keygen()
-    CLIENT_ENCKEY =  SERVER_DECKEY = keygen()
+    SERVER_ENCKEY = CLIENT_DECKEY = keygen()
+    CLIENT_ENCKEY = SERVER_DECKEY = keygen()
 ## todo ECC
 
-MAC_KEY = random.randint(2**62,2**63)
+MAC_KEY = random.randint(2**62, 2**63)
 
 #sec1 = str(CLIENT_DECKEY)
 #sec1 = koblitz_en(sec1, pub)
