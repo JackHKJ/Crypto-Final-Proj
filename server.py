@@ -74,7 +74,9 @@ if en_method == "ELG":
 if en_method == "DES":
     SERVER_ENCKEY = CLIENT_DECKEY =  keygen()
     CLIENT_ENCKEY =  SERVER_DECKEY = keygen()
-## todo ECC
+if en_method == "DES":
+    CLIENT_DECKEY, SERVER_ENCKEY = make_keypair()
+    SERVER_DECKEY, CLIENT_ENCKEY = make_keypair()
 
 MAC_KEY = random.randint(2**62,2**63)
 
