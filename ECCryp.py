@@ -183,16 +183,18 @@ def koblitz_de(secr, ab):
 
 def koblitz_en_str(m, ab):
     cipherList = ""
-    for i in range(0,int(len(m)/35+1),35):
+    for i in range(0,int(len(m)/35+35),35):
         cipherList += (str(koblitz_en(m[i:i+35], ab))) + "@"
         
-    return cipherList[:-1]
+    return cipherList
 
 
 def koblitz_de_str(ciphertext, keyset):
     ret = ""
     sliced = ciphertext.split("@")
     for ciphertextslice in sliced:
+        if len(ciphertextslice) == 0:
+            break
         left, right = ciphertextslice[2:-2].split("), (")
         l1, l2 = left.split(", ")
         r1, r2 = right.split(", ")

@@ -22,6 +22,7 @@ def decryptor(method, ciphertext, macKey, decryptKey):
     #print(textWithMAC)    
     #verify mac
     #"$REJECT" will be returned on error
+    print(textWithMAC)
     plain = verifyMAC(textWithMAC, macKey)
     return plain
     
