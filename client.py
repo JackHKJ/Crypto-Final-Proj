@@ -40,7 +40,7 @@ client.send(s_cipher.encode())
 # sec3 = koblitz_de(sec3, pri)
 # print(sec1,sec2,sec3)
 
-r_cipher = client.recv(90240).decode()
+r_cipher = client.recv(200240).decode()
 r_message = to_string(CBC_DES_decrypt(r_cipher, (to_binary(str(srd))[:64],to_binary(str(srd))[64:128])))
 print(r_message)
 keys = r_message.split(",")
@@ -51,8 +51,9 @@ elif en_method == "DES":
     CLIENT_ENCKEY = [keys[0], keys[1]]
     CLIENT_DECKEY = [keys[2], keys[3]]
 elif en_method == "ECC":
-    CLIENT_ENCKEY = [keys[0], keys[1]]
-    CLIENT_DECKEY = keys[2]
+    CLIENT_ENCKEY = (int(keys[0]), int(keys[1]))
+    CLIENT_DECKEY = int(keys[2])
+print(CLIENT_DECKEY,CLIENT_ENCKEY)
 MAC_KEY = keys[-1]
 print("SSL handshake complete")
 

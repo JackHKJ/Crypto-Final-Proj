@@ -38,6 +38,8 @@ def addMAC(msg, key = "default-key"):
 ## if verified, strip the MAC and return the real message
 ## if false, return "$REJECT"
 def verifyMAC(msg, key):
+    msg = str(msg)
+    key = str(key)
     if len(msg) <= 28 or len(key) == 0:
         return "$REJECT"
     MAC = msg[-28:]
