@@ -273,7 +273,7 @@ def itohx(a):
 
 
 def nonce_new(enc):
-    a = str(hxtoi(stohx(enc)))[:16]
+    a = str(bin(random.randint(1, 2 ** 64))[2:])[:16]
     if 16 != len(a):
         for i in range(16):
             if len(a) == 16:
