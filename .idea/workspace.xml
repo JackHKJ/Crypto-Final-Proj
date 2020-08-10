@@ -19,8 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3f02b6-526f-4f47-8d71-04b9e45cc271" name="Default Changelist" comment="commit">
-      <change beforePath="$PROJECT_DIR$/Algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Algorithms.py" afterDir="false" />
+    <list default="true" id="bc3f02b6-526f-4f47-8d71-04b9e45cc271" name="Default Changelist" comment="exit">
+      <change afterPath="$PROJECT_DIR$/YiYangReadMe.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +188,21 @@
       <option name="project" value="LOCAL" />
       <updated>1597050701805</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="exit">
+      <created>1597051195536</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1597051195536</updated>
+    </task>
+    <task id="LOCAL-00020" summary="exit">
+      <created>1597051290289</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1597051290289</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -204,7 +219,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="exit" />
+    <option name="LAST_COMMIT_MESSAGE" value="exit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1045" y="171" width="2230" height="1117" key="DiffContextDialog" timestamp="1597045538727">
@@ -219,10 +235,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="909" y="427" key="MultipleFileMergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597041864932" />
-    <state x="851" y="432" key="Vcs.Push.Dialog.v2" timestamp="1597050704543">
+    <state x="851" y="432" key="Vcs.Push.Dialog.v2" timestamp="1597051198580">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="851" y="432" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1597050704543" />
+    <state x="851" y="432" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1597051198580" />
     <state x="499" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596484327283">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
