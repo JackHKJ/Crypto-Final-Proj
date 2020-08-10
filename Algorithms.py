@@ -269,13 +269,22 @@ def itohx(a):
   return hex(a)[2:]
 
 def nonce_new(enc):
-    a = str(hxtoi(stohx(enc)))[:8]
+    a = str(hxtoi(stohx(enc)))[:16]
+    if 16 != len(a):
+        for i in range(16):
+            if len(a)==16:
+                break
+            a = a[-i] + a
     return a
 
 def nonce_inc(a):
-    a = str(stohx(a))
-    a = stohx(a)
-    a = str(hxtoi(a)+12000000)[:16]
+    tmp = 16
+    a = str(int(a[4:]+a[1]+a[3]+a[0]+a[2])+5)
+    if tmp != len(a):
+        for i in range(tmp):
+            if len(a)==tmp:
+                break
+            a = a[-i] + a
     return a
 def keygen():
     des_key = bin(random.randint(1, 2 ** 64))[2:]
@@ -283,3 +292,8 @@ def keygen():
     cbc_iv = bin(random.randint(1, 2 ** 64))[2:]
     cbc_iv = "0"*(64-len(cbc_iv)) + cbc_iv
     return [des_key, cbc_iv]
+
+# a = nonce_new("ECC")
+# for i in range(20):
+#     print(a)
+#     a = nonce_inc(a)
