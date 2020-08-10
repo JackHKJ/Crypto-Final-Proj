@@ -57,9 +57,13 @@ print(CLIENT_DECKEY,CLIENT_ENCKEY)
 MAC_KEY = keys[-1]
 print("SSL handshake complete")
 
+print(CLIENT_DECKEY)
+print(CLIENT_ENCKEY)
+print(MAC_KEY)
 
 while s_message != "exit":
     s_message = input(">>> ")
+    s_message = str(s_message)
     print("Sending: "+s_message)
     s_message = encryptor(en_method, s_message, MAC_KEY, CLIENT_ENCKEY)    
     s_cipher = to_binary(s_message)

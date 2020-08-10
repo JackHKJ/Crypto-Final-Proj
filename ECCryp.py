@@ -182,16 +182,24 @@ def koblitz_de(secr, ab):
 
 
 def koblitz_en_str(m, ab):
-    return str(koblitz_en(m, ab))
+    cipherList = ""
+    for i in range(0,int(len(m)/35+1),35):
+        cipherList += (str(koblitz_en(m[i:i+35], ab))) + "@"
+        
+    return cipherList[:-1]
 
 
 def koblitz_de_str(ciphertext, keyset):
-    left, right = ciphertext[2:-2].split("), (")
-    l1, l2 = left.split(", ")
-    r1, r2 = right.split(", ")
-    cipher = ((int(l1), int(l2)), (int(r1), float(r2)))
-    return koblitz_de(cipher, keyset)
-
+    ret = ""
+    sliced = ciphertext.split("@")
+    for ciphertextslice in sliced:
+        left, right = ciphertextslice[2:-2].split("), (")
+        l1, l2 = left.split(", ")
+        r1, r2 = right.split(", ")
+        cipher = ((int(l1), int(l2)), (int(r1), float(r2)))
+        ret += koblitz_de(cipher, keyset)
+    return ret
+    
 
 # apr, apu = make_keypair()
 # bpr, bpu = make_keypair()
