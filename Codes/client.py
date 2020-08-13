@@ -70,7 +70,7 @@ while s_message != "exit":
     s_cipher = to_binary(s_message)
     client.send(s_cipher.encode())
     
-    r_cipher = client.recv(102400).decode()
+    r_cipher = client.recv(1024000).decode()
     r_message = decryptorClient(en_method,r_cipher, MAC_KEY, CLIENT_DECKEY)
     print(r_message)
     if r_message == "Goodbye!":

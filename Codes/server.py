@@ -103,7 +103,7 @@ print("SSL handshake complete")
 
 
 while r_message != "exit":
-    r_cipher = connect.recv(102400).decode()
+    r_cipher = connect.recv(1024000).decode()
     r_message = to_string(r_cipher)
     r_message = decryptorServer(en_method, r_message, MAC_KEY, SERVER_DECKEY)
     print("<<<", r_message)
