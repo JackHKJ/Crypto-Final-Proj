@@ -103,9 +103,9 @@ print("SSL handshake complete")
 
 
 while r_message != "exit":
-    r_cipher = connect.recv(10240).decode()
+    r_cipher = connect.recv(102400).decode()
     r_message = to_string(r_cipher)
-    r_message = decryptor(en_method, r_message, MAC_KEY, SERVER_DECKEY)
+    r_message = decryptorServer(en_method, r_message, MAC_KEY, SERVER_DECKEY)
     print("<<<", r_message)
     
     command = r_message.split()
@@ -142,7 +142,7 @@ while r_message != "exit":
         s_message = "Invalid command!\nSee commands using \"help\""
     # encrypt here
     print("sending message: "+s_message)
-    s_cipher = encryptor(en_method, s_message, MAC_KEY, SERVER_ENCKEY)
+    s_cipher = encryptorServer(en_method, s_message, MAC_KEY, SERVER_ENCKEY)
     connect.send(s_cipher.encode())
 connect.close()
 server.close()

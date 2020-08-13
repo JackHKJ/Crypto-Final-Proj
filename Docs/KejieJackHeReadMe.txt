@@ -26,3 +26,9 @@ HMAC-SHA1 implementation:
 The StringBinaryConverter:
 
 	This is a converter class implemented for add padding to satisfy the bit-length requirement, which uses the random padding that select characters in the set(padding_list) and append them to the end of the message. When decoding, strip off the characters from the back when possible
+
+The NONCE implementation
+
+	The nonce is integrated within the MAC function which generates a len 32 integer and append to the end of the message before the start of the encryption, then add the mac and then Encrypt the message:
+	Enc((plain | NONCE ) | MAC) <- a structure like this
+	two seperate files are used to store the NONCE of the server and the Client and will reject anytime a NONCE is reused

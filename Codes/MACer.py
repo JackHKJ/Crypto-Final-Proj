@@ -14,7 +14,7 @@ for line in nonceStorage:
     #print(line)
     if len(line) == 0:
         continue
-    SERVERNONCE.add(int(line.rstrip("\n")))
+    SERVERNONCE.add(line.rstrip("\n"))
 nonceStorage.close()
 
 CLIENTNONCE = set()
@@ -23,7 +23,7 @@ for line in nonceStorage:
     #print(line)
     if len(line) == 0:
         continue
-    CLIENTNONCE.add(int(line.rstrip("\n")))
+    CLIENTNONCE.add(line.rstrip("\n"))
 nonceStorage.close()
 
 ## this HMAC-SHA1 function make_digest(message, key) is imported from
@@ -66,12 +66,36 @@ def verifyMAC(msg, key):
         return msg
     return "$REJECT"
 
+def addMacServer(msg, key = "default-key"):
+    msg = addNonceServer(str(msg))
+    return addMAC(msg, key)
+
+def verifyMacServer(msg, key):
+    msg = str(msg)
+    msg = verifyMAC(msg, key)
+    msg = verifyNonceServer(msg)
+    return msg
+
+def addMacClient(msg, key = "default-key"):
+    msg = addNonceClient(str(msg))
+    return addMAC(msg, key)
+
+def verifyMacClient(msg, key):
+    msg = str(msg)
+    msg = verifyMAC(msg, key)
+    msg = verifyNonceClient(msg)
+    return msg
+
+
+
+
 
 def addNonceServer(msg):
     msg = str(msg)
     thisNonce = 0
     while True:
         thisNonce = random.randint(10**31, 10**32)
+        thisNonce = str(thisNonce)
         if not thisNonce in SERVERNONCE:
             SERVERNONCE.add(thisNonce)
             nonceStorage = open("SERVERNONCE.txt",mode="a")
@@ -87,6 +111,7 @@ def addNonceClient(msg):
     thisNonce = 0
     while True:
         thisNonce = random.randint(10**31, 10**32)
+        thisNonce = str(thisNonce)
         if not thisNonce in CLIENTNONCE:
             CLIENTNONCE.add(thisNonce)
             nonceStorage = open("CLIENTNONCE.txt",mode="a")
@@ -102,7 +127,7 @@ def addNonceClient(msg):
 def verifyNonceClient(msg):
     if len(msg) <= 16:
         return "$REJECT"
-    nonce = int(msg[-32:])
+    nonce = msg[-32:]
     if nonce in CLIENTNONCE:
         return "$REJECT"
     CLIENTNONCE.add(nonce)
@@ -114,7 +139,7 @@ def verifyNonceClient(msg):
 def verifyNonceServer(msg):
     if len(msg) <= 16:
         return "$REJECT"
-    nonce = int(msg[-32:])
+    nonce = msg[-32:]
     if nonce in SERVERNONCE:
         return "$REJECT"
     SERVERNONCE.add(nonce)
@@ -130,12 +155,12 @@ if __name__ == "__main__":
     msg1 = "A.AAA"
     msg2 = "AA.AA"
     key = "private-key"
-    msgWithMac = addMAC(msg1,key)
+    msgWithMac = addMacClient(msg1,key)
     print(msgWithMac)
-    print(verifyMAC(msgWithMac,key))
+    print(verifyMacServer(msgWithMac,key))
     assert((make_digest(msg1,key) != make_digest(msg2,key)))    
     
-    onePNonce = addNonceClient("MESSAGE")
-    print(onePNonce)
-    plain = verifyNonceServer(onePNonce)
-    print(plain)
+    #onePNonce = addNonceClient("MESSAGE")
+    #print(onePNonce)
+    #plain = verifyNonceServer(onePNonce)
+    #print(plain)
