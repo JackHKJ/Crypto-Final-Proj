@@ -19,10 +19,9 @@ SSL handshake protocol
 
 en_method = "ELG"
 # KEYS GOES HERE, TESTING ONLY!!!
-pri, pub = 17266110910292182863031101798374952031947451314643790344773650325784057863506, \
-           (63418887483913902302210242333028958573736406591311866468970740733910330138582,
-            100732508251634749738002515251900185798485578709518688083838565500932099246055)
-
+pri, pub = 24540860894901296002106611197692978439986639389673598864824915546895243523884, \
+           (64991997441828919360060966063558821932645220918997486358754929826725776010518, 66758789698114878663337548137288305612963497731817000763542851027671642700936)
+srd = 28163497231646330096955240836392597663982077794570507527227719278559069711492
 secret = 'hello'
 balance = 100.00
 server = socket.socket()
@@ -38,7 +37,7 @@ print("address: ", addr)
 r_cipher = connect.recv(1024).decode()
 r_message = koblitz_de_str(r_cipher, pri)
 en_method = r_message
-nce = nonce_new(en_method)
+nce = nonce_new()
 s_cipher = koblitz_en_str(nce, pub)
 connect.send(s_cipher.encode())
 r_cipher = connect.recv(1024).decode()
@@ -60,7 +59,7 @@ r_cipher = connect.recv(10240).decode()
 
 r_message = to_string(r_cipher)
 if r_message != tmpnce:
-    print(r_cipher, checkp)
+    # print(r_cipher, checkp)
     print("Handshake failed! @dec Closing connection {}".format(addr))
     connect.close()
     exit()
@@ -79,13 +78,13 @@ elif en_method == "DES":
 elif en_method == "ECC":
     CLIENT_DECKEY, SERVER_ENCKEY = make_keypair()
     SERVER_DECKEY, CLIENT_ENCKEY = make_keypair()
-    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1]) + "," + str(CLIENT_DECKEY)
+    s_message = str(CLIENT_ENCKEY[0]) + "," + str(CLIENT_ENCKEY[1]) + "," + str(CLIENT_DECKEY) +","
 MAC_KEY = random.randint(2**62, 2**63)
 
 
 s_message += str(MAC_KEY)
 
-s_cipher = CBC_DES_encrypt(to_binary(s_message), (to_binary(str(pri))[:64],to_binary(str(pri))[64:128]))
+s_cipher = CBC_DES_encrypt(to_binary(s_message), (to_binary(str(srd))[:64],to_binary(str(srd))[64:128]))
 connect.send(s_cipher.encode())
 
 
@@ -104,9 +103,9 @@ print("SSL handshake complete")
 
 
 while r_message != "exit":
-    r_cipher = connect.recv(10240).decode()
+    r_cipher = connect.recv(102400).decode()
     r_message = to_string(r_cipher)
-    r_message = decryptor(en_method, r_message, MAC_KEY, SERVER_DECKEY)
+    r_message = decryptorServer(en_method, r_message, MAC_KEY, SERVER_DECKEY)
     print("<<<", r_message)
     
     command = r_message.split()
@@ -143,7 +142,7 @@ while r_message != "exit":
         s_message = "Invalid command!\nSee commands using \"help\""
     # encrypt here
     print("sending message: "+s_message)
-    s_cipher = encryptor(en_method, s_message, MAC_KEY, SERVER_ENCKEY)
+    s_cipher = encryptorServer(en_method, s_message, MAC_KEY, SERVER_ENCKEY)
     connect.send(s_cipher.encode())
 connect.close()
 server.close()
