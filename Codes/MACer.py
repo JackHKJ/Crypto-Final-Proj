@@ -106,6 +106,7 @@ def addNonceServer(msg):
     msg += str(thisNonce)
     return msg
 
+
 def addNonceClient(msg):
     msg = str(msg)
     thisNonce = 0

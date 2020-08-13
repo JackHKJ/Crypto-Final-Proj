@@ -34,9 +34,8 @@ def Decoder32(message):
 
 def Encoder64(message):
     message = str(message)
-    if(len(message)%8 != 0):
-        for i in range(len(message)%8):
-            message += padding_list[random.randint(0,len(padding_list)-1)]
+    while len(message) % 8 != 0:
+        message += padding_list[random.randint(0,len(padding_list)-1)]
     return to_binary(message)
 
 def Decoder64(message):
