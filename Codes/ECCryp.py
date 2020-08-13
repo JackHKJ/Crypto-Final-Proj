@@ -183,7 +183,7 @@ def koblitz_de(secr, ab):
 
 def koblitz_en_str(m, ab):
     cipherList = ""
-    for i in range(0,int(len(m)/35+35),35):
+    for i in range(0,len(m),35):
         cipherList += (str(koblitz_en(m[i:i+35], ab))) + "@"
         
     return cipherList
