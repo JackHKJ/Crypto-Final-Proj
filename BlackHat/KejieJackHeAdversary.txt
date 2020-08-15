@@ -1,0 +1,32 @@
+Adversary by Kejie Jack He:
+
+In conclusion, the attacks on this team's project are mainly based on
+	a) non-encrypted handshake advantages
+	b) nonce not used, therefore man in the middle can always use a replay attack
+
+Details:
+
+1. 	at the beginning of the Handshake model there is a method called initialize_connection() which starts the session
+																   ^^^^^^^^^^^^^^^^^^^^^^^
+																   line 81 of client.py and line 122 of server.py
+	Diffie hellman was chosen as the PKC for verification, however, the message was sent without encryption:
+		Source:
+			client.py line 94: self.send_message(format_diffie_hellman_message(dh_step_1), encrypted=False)
+			server.py line 136: self.send_message(sock, format_diffie_hellman_message(dh_step_2), encrypted=False)
+	Though DH was itself secure in strength, the message itself is not encrypted! And since Nonce is not utilized, adversary can perform man in the middle attack simply by listening on one side of the service (no matter client side or the server side) and later on replay the message, which will pass the verification and gain all previllages. 
+	Adversary don't even need to be powerful enough to cut the stream, listening and recording the first few message should be enough.
+
+2.	Same problem occurs in the send_message() funciton:
+	Source:
+		client.py line 24: def send_message(self, message, encrypted=True)
+		server.py line 93: def send_message(self, sock, message, encrypted=True, message_no=None):
+	Though the message is encrypted, the message is not secured with Nonce, therefore replaying certain message will cause the failure of the system directly
+		e.g.:	a) client: Enc("Withdral $1000")
+				b) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ recorded by adversary
+				c) adversary replay msg
+				d) adversary get $1000!
+
+3.	The system is also liable in design for the one-sided MAC verification:
+	Source:
+			client.py line 94: self.send_message(format_diffie_hellman_message(dh_step_1), encrypted=False)
+	The client.py sends message without a MAC (which assumes themselves as trustworthy). However, adversary can catch the message, flip certain bits, then send to the server, which may produce dangerous result since theres no check of the authenticity of the message.
