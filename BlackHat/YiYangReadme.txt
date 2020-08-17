@@ -45,15 +45,10 @@ need special functions. A more rigorous nonce would need server or the client to
 
 
 How to attack:
-    Client's send_message() didn't use MAC.
-    Since the plaintext tells the Black Hat which part of the message is the shared secret, a Black Hat can
-    1. intercept the second message that the client sends and
-    2. generate a Diffie Hellman key.
-    3. Open another connection with the server and send the generated key,k formated as "OK|DH1."+k to the server.
-    4. Receive the signing with the key.
-    5. Send the message to client as the server.
-    6. Receive the other part of the secret from the client
-    7. catch the messages and relay them between, and decrypt them to see what is the conversation (standard man-in-the-middle).
+    Since the plaintext tells the Black Hat which part of the message is the shared secret, a Black Hat can open another
+     connection with the server and send the generated key,k formated as "OK|DH1."+k to the server.
+    Nonce offered little to no security advantage than not having it.
+
 
 
 
