@@ -1,4 +1,25 @@
-1. Vulnerable plaintext output from  messages.py:extract_diffie_hellman_message().
+1. AES encryption fails if the input is large, no blocking in some messages, client rounding to accommodate encryption.
+Reasoning:
+    Every general message is transmitted as AES("OK|{username}.{password}|{message_no}|{type}.{arg1}.+{arg2}.+....{argn}}"|MAC())
+client.py:184 |			if line in logged_in_commands[-2:]:
+client.py:185 |				amount_str = input('amount: $').strip()
+client.py:186 |				amount = to_float(amount_str)
+client.py:187 |				if amount == None:
+client.py:188 |					print('invalid amount')
+client.py:189 |					continue
+client.py:190 |
+client.py:191 |				cents, dollars = math.modf(amount)
+client.py:192 |				cents = int(round(cents * 100))
+client.py:193 |				dollars = int(dollars)
+    Here is where the client tries to take the number to be encrypted.
+    When the input for a deposit is "131313131313131313", "dollars"(client.py:193) stays to be "131313131313131312.0", and
+    any other number that has more digit than "131313131313131313" (17 digits) is wrong.
+    Such as "13131313131313131313313" yielded "13131313131313130635264" before encrypting.
+    Black Hat could possibly overload the system to sabotage the transaction.
+    And clients' transaction is wrongly rounded to accommodate encryption, this could cause extreme problems.
+
+
+2. Vulnerable plaintext output from  messages.py:extract_diffie_hellman_message().
 Reasoning:
 messages.py:11  |def extract_diffie_hellman_message(message):
 messages.py:12  |   if not message.startswith('OK|DH1.') or not message[7:].isdigit():
@@ -23,7 +44,7 @@ It also suggests the other handshake protocols are not encrypted, even if the bl
 adding extra unnecessary workload to the encryption algorithm and can be inefficient.
 
 
-2.  Weak or useless nonce, "message_no".
+3.  Weak or useless nonce, "message_no".
 Reasoning:
     Structure of the general messages from the client:
     AES("OK|{username}.{password}|{message_no}|{type}.{arg1}.+{arg2}.+....{argn}}"|MAC())
