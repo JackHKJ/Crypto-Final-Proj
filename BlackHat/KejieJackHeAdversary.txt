@@ -2,7 +2,7 @@ Adversary by Kejie Jack He:
 
 In conclusion, the attacks on this team's project are mainly based on
 	a) non-encrypted handshake advantages
-	b) nonce not used, therefore man in the middle can always use a replay attack
+	b) nonce used, but its weak in design, therefore man in the middle can always use a replay attack
 
 Details:
 
@@ -20,11 +20,15 @@ Details:
 	Source:
 		client.py line 24: def send_message(self, message, encrypted=True)
 		server.py line 93: def send_message(self, sock, message, encrypted=True, message_no=None):
-	Though the message is encrypted, the message is not secured with Nonce, therefore replaying certain message will cause the failure of the system directly
+	Though the message is encrypted, the message weakly secured with nonce:
+		Source:
+			server.py line 150: self.message_numbers[sock] = 0
+	This means that when we shut down the system and brings a cold start, the nonce will act in an predictable manner(starts from zero), therefore makes the replay attack possible by recording the very first transaction, shutdown the system and restart, then replay the transaction.
 		e.g.:	a) client: Enc("Withdral $1000")
 				b) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ recorded by adversary
-				c) adversary replay msg
-				d) adversary get $1000!
+				c) force system to reboot (cut power or other options)
+				d) adversary replay msg
+				e) adversary get $1000!
 
 3.	The system is also liable in design for the one-sided MAC verification:
 	Source:
