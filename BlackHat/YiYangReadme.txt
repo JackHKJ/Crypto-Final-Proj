@@ -67,7 +67,7 @@ need special functions. A more rigorous nonce would need server or the client to
 
 How to attack:
     Since the plaintext tells the Black Hat which part of the message is the shared secret, a Black Hat can open another
-     connection with the server and send the generated key,k formated as "OK|DH1."+k to the server.
+        connection with the server and send the generated key,k formated as "OK|DH1."+k to the server.
     Nonce offered little to no security advantage than not having it.
 
 
