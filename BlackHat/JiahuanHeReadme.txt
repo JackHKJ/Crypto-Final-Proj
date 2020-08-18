@@ -4,7 +4,7 @@ At first, The server sends a message of its status and the client receives it to
 server.py: 123 | self.send_message(sock, OK_START_KEY_EXCHANGE, encrypted=False)
 client.py: 82  | error, message = self.receive_message(encrypted=False)
 
-Next, client generates a Diffie-Hellman message and sends it to the server IN PLAIN TEXT
+Next, client generates a Diffie-Hellman message and sends it to the server in plain text
 client.py: 92  | dh_step_1 = pow(DIFFIE_HELLMAN_PUBLIC_G, DIFFIE_HELLMAN_SECRET_RANDOM_CLIENT, DIFFIE_HELLMAN_PUBLIC_N)
 client.py: 94  | self.send_message(format_diffie_hellman_message(dh_step_1), encrypted=False)
 
@@ -12,7 +12,7 @@ Then, The server receives the message and later generates the session key with i
 server.py: 125 | error, dh_step_1_raw = self.receive_message(sock, encrypted=False, buffer_size=1500)
 server.py: 138 | self.session_key = pow(dh_step_2, DIFFIE_HELLMAN_SECRET_RANDOM_CLIENT, DIFFIE_HELLMAN_PUBLIC_N)
 
-Likely, The server generates a Diffie-Hellman message and sends it to the client too, also IN PLAIN TEXT
+Likely, The server generates a Diffie-Hellman message and sends it to the client too
 server.py: 135 | dh_step_2 = pow(DIFFIE_HELLMAN_PUBLIC_G, DIFFIE_HELLMAN_SECRET_RANDOM_SERVER, DIFFIE_HELLMAN_PUBLIC_N)
 server.py: 136 | self.send_message(sock, format_diffie_hellman_message(dh_step_2), encrypted=False)
 
